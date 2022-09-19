@@ -70,11 +70,16 @@ class FormUploadPending extends StatelessWidget {
                   controller: amountController,
                   label: 'Cantidad',
                   maxLength: 6,
+                  isNumber: true,
                 ),
               ),
             ],
           ),
-          CustomTextFormBox(controller: descController, label: 'Descripción'),
+          CustomTextFormBox(
+            controller: descController,
+            label: 'Descripción',
+            isNumber: false,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -84,6 +89,7 @@ class FormUploadPending extends StatelessWidget {
                   controller: purchasePriceController,
                   label: 'Precio de compra',
                   maxLength: 10,
+                  isNumber: true,
                 ),
               ),
               SizedBox(
@@ -92,21 +98,26 @@ class FormUploadPending extends StatelessWidget {
                   controller: priceController,
                   label: 'Precio de venta',
                   maxLength: 10,
+                  isNumber: true,
                 ),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.32,
                 child: CustomTextFormBox(
-                    controller: providerController,
-                    label: 'Proveedor',
-                    maxLength: 30),
+                  controller: providerController,
+                  label: 'Proveedor',
+                  maxLength: 30,
+                  isNumber: false,
+                ),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.23,
                 child: CustomTextFormBox(
-                    controller: categoryController,
-                    label: 'Categoria',
-                    maxLength: 20),
+                  controller: categoryController,
+                  label: 'Categoria',
+                  maxLength: 20,
+                  isNumber: false,
+                ),
               ),
             ],
           ),

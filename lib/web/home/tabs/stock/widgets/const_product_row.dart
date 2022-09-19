@@ -12,74 +12,31 @@ class ConstProductRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * codeWidthCol,
-            child: Text(
-              "Código",
-              style: styleTextConstProductRow,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * nameWidthCol,
-            child: Text(
-              "Nombre",
-              style: styleTextConstProductRow,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * descWidthCol,
-            child: Text(
-              "Descripción",
-              style: styleTextConstProductRow,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * amountWidthCol,
-            child: Text(
-              "Cantidad",
-              style: styleTextConstProductRow,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * purchasePriceWidthCol,
-            child: Text(
-              "P. compra",
-              style: styleTextConstProductRow,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * priceWidthCol,
-            child: Text(
-              "P. venta",
-              style: styleTextConstProductRow,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * providerWidthCol,
-            child: Text(
-              "Proveedor",
-              style: styleTextConstProductRow,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * categoryWidthCol,
-            child: Text(
-              "Categoría",
-              style: styleTextConstProductRow,
-              textAlign: TextAlign.center,
-            ),
-          ),
+          _columnName(context, widthCol: codeWidthCol, value: 'Código'),
+          _columnName(context, widthCol: nameWidthCol, value: 'Nombre'),
+          _columnName(context, widthCol: descWidthCol, value: 'Descripción'),
+          _columnName(context, widthCol: amountWidthCol, value: 'Cantidad'),
+          _columnName(context,
+              widthCol: purchasePriceWidthCol, value: 'P. compra'),
+          _columnName(context, widthCol: priceWidthCol, value: 'P. venta'),
+          _columnName(context, widthCol: providerWidthCol, value: 'Proveedor'),
+          _columnName(context, widthCol: categoryWidthCol, value: 'Categoría'),
           SizedBox(
               width: MediaQuery.of(context).size.width * buttonsWidthCol,
               child: Container()),
         ],
+      ),
+    );
+  }
+
+  SizedBox _columnName(BuildContext context,
+      {required double widthCol, required String value}) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * widthCol,
+      child: Text(
+        value,
+        style: styleTextConstProductRow,
+        textAlign: TextAlign.center,
       ),
     );
   }

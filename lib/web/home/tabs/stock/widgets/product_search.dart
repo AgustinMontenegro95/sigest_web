@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
+import 'package:sigest/web/home/tabs/stock/widgets/closed_button.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/product_attribute.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/product_pdf_view.dart';
 
@@ -22,11 +23,11 @@ class ProductSearch extends StatelessWidget {
       child: AutoSuggestBox(
         clearButtonEnabled: true,
         placeholder: 'Buscar',
+        placeholderStyle: const TextStyle(color: Colors.black),
         highlightColor: Colors.blue,
         cursorColor: Colors.black,
         items: nameProductsList,
         onSelected: (name) {
-          //obtengo el producto
           ProductModel productModel = ProductModel(
               uId: "uId", code: 1, name: name, amount: 1, state: false);
           for (var i = 0; i < productList!.length; i++) {
@@ -35,7 +36,6 @@ class ProductSearch extends StatelessWidget {
               break;
             }
           }
-          //
           showDialog(
             context: context,
             builder: (context) {
@@ -66,7 +66,6 @@ class ProductSearch extends StatelessWidget {
                             width: 30,
                           ),
                           onPressed: () {
-                            //imprimir pdf
                             Navigator.push(
                               context,
                               FluentPageRoute(
@@ -90,18 +89,9 @@ class ProductSearch extends StatelessWidget {
                           },
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30),
-                        child: Button(
-                          child: Image.asset(
-                            'assets/images/close_icon.png',
-                            fit: BoxFit.cover,
-                            width: 30,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 30),
+                        child: ClosedButton(),
                       ),
                     ],
                   ),
@@ -170,7 +160,7 @@ class ProductSearch extends StatelessWidget {
                     },
                     child: const Text(
                       'Aceptar',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),
                 ],

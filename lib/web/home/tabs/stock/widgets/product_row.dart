@@ -6,6 +6,7 @@ import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
 import 'package:sigest/web/domain/bloc/product/product_bloc.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/content_product.dart';
+import 'package:sigest/web/home/tabs/stock/widgets/product_attribute.dart';
 
 class ProductRow extends StatefulWidget {
   final ProductModel productModel;
@@ -207,15 +208,29 @@ class _ProductRowState extends State<ProductRow> {
                         context: context,
                         builder: (context) {
                           return ContentDialog(
-                            title: const Text(
-                                '¿Esta seguro que desea eliminar este producto?',
-                                textAlign: TextAlign.center),
+                            constraints: BoxConstraints(
+                                maxWidth:
+                                    MediaQuery.of(context).size.width * 0.5),
+                            title: Text(
+                              '¿Esta seguro que desea eliminar este producto?',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             content: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text('Código: ${widget.productModel.code}'),
-                                Text('Nombre: ${widget.productModel.name}'),
+                                ProductAttribute(
+                                  attribute: 'Código: ',
+                                  value: widget.productModel.code.toString(),
+                                ),
+                                ProductAttribute(
+                                  attribute: 'Nombre: ',
+                                  value: widget.productModel.name,
+                                ),
                               ],
                             ),
                             actions: [
@@ -269,12 +284,32 @@ class _ProductRowState extends State<ProductRow> {
       context: context,
       builder: (context) {
         return ContentDialog(
-          title: const Text('SiGeSt'),
-          content: const Text('¿Esta seguro de actualizar el producto?'),
+          constraints:
+              BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.5),
+          title: Text(
+            '¿Esta seguro que desea actualizar el producto?',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.blue, fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ProductAttribute(
+                attribute: 'Código: ',
+                value: widget.productModel.code.toString(),
+              ),
+              ProductAttribute(
+                attribute: 'Nombre: ',
+                value: widget.productModel.name,
+              ),
+            ],
+          ),
           actions: [
             Button(
               style: ButtonStyle(
-                  backgroundColor: ButtonState.all<Color?>(Colors.green)),
+                  backgroundColor: ButtonState.all<Color?>(Colors.red)),
               onPressed: () {
                 Navigator.pop(context);
               },

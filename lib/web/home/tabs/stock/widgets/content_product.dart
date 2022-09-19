@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
+import 'package:sigest/web/home/tabs/stock/widgets/closed_button.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/custom_text_form.dart';
 
 import 'product_pdf_view.dart';
@@ -62,7 +63,6 @@ class ContentProduct extends StatelessWidget {
                   width: 30,
                 ),
                 onPressed: () {
-                  //imprimir pdf
                   Navigator.push(
                     context,
                     FluentPageRoute(
@@ -87,18 +87,9 @@ class ContentProduct extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30),
-              child: Button(
-                child: Image.asset(
-                  'assets/images/close_icon.png',
-                  fit: BoxFit.cover,
-                  width: 30,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop([false]);
-                },
-              ),
+            const Padding(
+              padding: EdgeInsets.only(left: 30),
+              child: ClosedButton(),
             ),
           ],
         ),
@@ -145,7 +136,11 @@ class ContentProduct extends StatelessWidget {
                 ],
               ),
             ),
-            CustomTextFormBox(controller: descController, label: 'Descripción'),
+            CustomTextFormBox(
+              controller: descController,
+              label: 'Descripción',
+              isNumber: false,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -155,6 +150,7 @@ class ContentProduct extends StatelessWidget {
                     controller: amountController,
                     label: 'Cantidad',
                     maxLength: 6,
+                    isNumber: true,
                   ),
                 ),
                 SizedBox(
@@ -163,6 +159,7 @@ class ContentProduct extends StatelessWidget {
                     controller: purchasePriceController,
                     label: 'Precio de compra',
                     maxLength: 10,
+                    isNumber: true,
                   ),
                 ),
                 SizedBox(
@@ -171,6 +168,7 @@ class ContentProduct extends StatelessWidget {
                     controller: priceController,
                     label: 'Precio de venta',
                     maxLength: 10,
+                    isNumber: true,
                   ),
                 ),
               ],
@@ -181,16 +179,20 @@ class ContentProduct extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.45,
                   child: CustomTextFormBox(
-                      controller: providerController,
-                      label: 'Proveedor',
-                      maxLength: 30),
+                    controller: providerController,
+                    label: 'Proveedor',
+                    maxLength: 30,
+                    isNumber: false,
+                  ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.45,
                   child: CustomTextFormBox(
-                      controller: categoryController,
-                      label: 'Categoria',
-                      maxLength: 20),
+                    controller: categoryController,
+                    label: 'Categoria',
+                    maxLength: 20,
+                    isNumber: false,
+                  ),
                 ),
               ],
             ),
@@ -205,11 +207,11 @@ class ContentProduct extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.20,
               child: Button(
                 style: ButtonStyle(
-                  backgroundColor: ButtonState.all<Color?>(Colors.green),
+                  backgroundColor: ButtonState.all<Color?>(Colors.red),
                 ),
                 child: const Text(
-                  'Cancel',
-                  style: TextStyle(color: Colors.white),
+                  'Cancelar',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop([false]);
@@ -222,7 +224,8 @@ class ContentProduct extends StatelessWidget {
                 style: ButtonStyle(
                   backgroundColor: ButtonState.all<Color?>(Colors.green),
                 ),
-                child: const Text('OK', style: TextStyle(color: Colors.white)),
+                child: const Text('Aceptar',
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
                 onPressed: () {
                   if (desc != descController.text ||
                       amount != amountController.text ||
@@ -230,7 +233,6 @@ class ContentProduct extends StatelessWidget {
                       price != priceController.text ||
                       provider != providerController.text ||
                       category != categoryController.text) {
-                    //actualizacion correspon
                     ProductModel productModel = ProductModel(
                       uId: widget.productModel.name,
                       code: widget.productModel.code,

@@ -2,9 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
 import 'package:sigest/web/domain/bloc/product/product_bloc.dart';
-import 'package:sigest/web/home/tabs/primera_screen.dart';
 import 'package:sigest/web/home/tabs/profile/profile_tab.dart';
-import 'package:sigest/web/home/tabs/segunda_screen.dart';
 import 'package:sigest/web/home/tabs/stock/stock_tab.dart';
 import 'package:sigest/web/home/tabs/upload_product/upload_tab.dart';
 
@@ -45,14 +43,6 @@ class _NavigatorViewWidgetState extends State<NavigatorViewWidget> {
             title: const Text('Alta Producto'),
           ),
           PaneItem(
-            icon: const Icon(FluentIcons.a_t_p_logo),
-            title: const Text('Screen 1'),
-          ),
-          PaneItem(
-            icon: const Icon(FluentIcons.text_box),
-            title: const Text('Screen 2'),
-          ),
-          PaneItem(
             icon: const Icon(FluentIcons.profile_search),
             title: const Text('Perfil'),
           ),
@@ -76,8 +66,6 @@ class _NavigatorViewWidgetState extends State<NavigatorViewWidget> {
         children: [
           StockTab(userModel: widget.userModel),
           UploadTab(userModel: widget.userModel),
-          const PrimeraScreen(),
-          const SegundaScreen(),
           ProfilTab(userModel: widget.userModel),
         ],
       ),

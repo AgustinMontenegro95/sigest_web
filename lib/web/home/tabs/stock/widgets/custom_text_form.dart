@@ -4,12 +4,15 @@ class CustomTextFormBox extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final int? maxLength;
+  final bool isNumber;
 
-  const CustomTextFormBox(
-      {super.key,
-      required this.controller,
-      required this.label,
-      this.maxLength});
+  const CustomTextFormBox({
+    super.key,
+    required this.controller,
+    required this.label,
+    required this.isNumber,
+    this.maxLength,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +31,20 @@ class CustomTextFormBox extends StatelessWidget {
       onEditingComplete: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
-      validator: (text) {
-        if (text == null || text.isEmpty) {
-          return 'Debe ingresar "$label".';
-        }
-        return null;
-      },
+      validator: isNumber
+          ? (value) {
+              bool isNum = double.tryParse(value!) != null;
+              if ((value == null || value.isEmpty) || !isNum) {
+                return 'Debe ingresar $label (tipo numerico).';
+              }
+              return null;
+            }
+          : (value) {
+              if (value == null || value.isEmpty) {
+                return 'Debe ingresar $label.';
+              }
+              return null;
+            },
       decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
     );
   }

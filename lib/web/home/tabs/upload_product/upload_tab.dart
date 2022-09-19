@@ -53,46 +53,44 @@ class _UploadTabState extends State<UploadTab> {
         content: SizedBox(
           height: double.infinity,
           width: double.infinity,
-          child: Column(
-            children: [
-              UploadProduct(
-                  codeController: codeController,
-                  nameController: nameController,
-                  amountController: amountController,
-                  descController: descController,
-                  purchasePriceController: purchasePriceController,
-                  priceController: priceController,
-                  providerController: providerController,
-                  categoryController: categoryController),
-              BlocBuilder<ProductBloc, ProductState>(
-                builder: (context, state) {
-                  return Container(
-                    child: state.maybeWhen(
-                        loaded: (productList) {
-                          return Column(
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.only(
-                                    left: 20, top: 20, bottom: 10),
-                                child: const Text(
-                                  "Pendientes",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                UploadProduct(
+                    codeController: codeController,
+                    nameController: nameController,
+                    amountController: amountController,
+                    descController: descController,
+                    purchasePriceController: purchasePriceController,
+                    priceController: priceController,
+                    providerController: providerController,
+                    categoryController: categoryController),
+                BlocBuilder<ProductBloc, ProductState>(
+                  builder: (context, state) {
+                    return Container(
+                      child: state.maybeWhen(
+                          loaded: (productList) {
+                            return Column(
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.only(
+                                      left: 20, top: 20, bottom: 10),
+                                  child: const Text(
+                                    "Agregar producto pendiente",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                              const ConstPendingProductRow(),
-                              const Divider(
-                                style: DividerThemeData(
-                                    decoration:
-                                        BoxDecoration(color: Colors.white)),
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.3,
-                                child: ListView.separated(
+                                const ConstPendingProductRow(),
+                                const Divider(
+                                  style: DividerThemeData(
+                                      decoration:
+                                          BoxDecoration(color: Colors.white)),
+                                ),
+                                ListView.separated(
                                   shrinkWrap: true,
                                   itemCount: productList!.length,
                                   itemBuilder: (context, index) {
@@ -109,16 +107,16 @@ class _UploadTabState extends State<UploadTab> {
                                     );
                                   },
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                        loading: () => const Center(child: ProgressBar()),
-                        orElse: () => const ProgressBar()),
-                  );
-                },
-              ),
-            ],
+                              ],
+                            );
+                          },
+                          loading: () => const Center(child: ProgressBar()),
+                          orElse: () => const ProgressBar()),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ));
   }

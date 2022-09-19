@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
 import 'package:sigest/data/models/product_model/product_model.dart';
+import 'package:sigest/web/home/tabs/stock/widgets/closed_button.dart';
 
 import 'package:sigest/web/home/tabs/upload_product/widgets/actions_upload.dart';
 import 'package:sigest/web/home/tabs/upload_product/widgets/form_upload_pending.dart';
@@ -59,19 +60,8 @@ class _LoadPendingState extends State<LoadPending> {
           children: [
             Text("Alta de producto pendiente".toUpperCase(),
                 style: TextStyle(fontSize: 35, color: Colors.blue)),
-            Padding(
-              padding: const EdgeInsets.only(left: 30),
-              child: Button(
-                child: Image.asset(
-                  'assets/images/close_icon.png',
-                  fit: BoxFit.cover,
-                  width: 30,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
+            const Padding(
+                padding: EdgeInsets.only(left: 30), child: ClosedButton()),
           ],
         ),
       ),
