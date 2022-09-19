@@ -168,88 +168,148 @@ class _ProductRowState extends State<ProductRow> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FilledButton(
-                  style: ButtonStyle(
-                      backgroundColor: ButtonState.all<Color?>(Colors.green)),
-                  onPressed: () {
-                    showDialog(
+                Tooltip(
+                  message: 'Ver detalles',
+                  child: FilledButton(
+                    style: ButtonStyle(
+                        backgroundColor: ButtonState.all<Color?>(Colors.green)),
+                    onPressed: () async {
+                      await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return ContentProduct(
+                              userModel: widget.userModel,
+                              widget: widget,
+                              descController: descController,
+                              amountController: amountController,
+                              purchasePriceController: purchasePriceController,
+                              priceController: priceController,
+                              providerController: providerController,
+                              categoryController: categoryController,
+                            );
+                          }).then((value) {
+                        final result = value as List;
+                        if (result[0] == true) {
+                          confirmChanges(context, result[1]);
+                        }
+                      });
+                    },
+                    child: const Icon(FluentIcons.add),
+                  ),
+                ),
+                Tooltip(
+                  message: 'Eliminar producto',
+                  child: FilledButton(
+                    style: ButtonStyle(
+                        backgroundColor: ButtonState.all<Color?>(Colors.red)),
+                    onPressed: () {
+                      showDialog(
                         context: context,
                         builder: (context) {
-                          return ContentProduct(
-                            userModel: widget.userModel,
-                            widget: widget,
-                            descController: descController,
-                            amountController: amountController,
-                            purchasePriceController: purchasePriceController,
-                            priceController: priceController,
-                            providerController: providerController,
-                            categoryController: categoryController,
-                          );
-                        });
-                  },
-                  child: const Icon(FluentIcons.add),
-                ),
-                FilledButton(
-                  style: ButtonStyle(
-                      backgroundColor: ButtonState.all<Color?>(Colors.red)),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return ContentDialog(
-                          title: const Text(
-                              '¿Esta seguro que desea eliminar este producto?',
-                              textAlign: TextAlign.center),
-                          content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text('Código: ${widget.productModel.code}'),
-                              Text('Nombre: ${widget.productModel.name}'),
+                          return ContentDialog(
+                            title: const Text(
+                                '¿Esta seguro que desea eliminar este producto?',
+                                textAlign: TextAlign.center),
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('Código: ${widget.productModel.code}'),
+                                Text('Nombre: ${widget.productModel.name}'),
+                              ],
+                            ),
+                            actions: [
+                              Button(
+                                  style: ButtonStyle(
+                                      backgroundColor: ButtonState.all<Color?>(
+                                          Colors.green)),
+                                  child: const Text(
+                                    'Cancelar',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }),
+                              Button(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          ButtonState.all<Color?>(Colors.red)),
+                                  child: const Text(
+                                    'Eliminar',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: () {
+                                    context.read<ProductBloc>().add(
+                                        ProductEvent.delete(
+                                            nameProduct:
+                                                widget.productModel.name));
+                                    context
+                                        .read<ProductBloc>()
+                                        .add(const ProductEvent.getActive());
+                                    Navigator.pop(context);
+                                  }),
                             ],
-                          ),
-                          actions: [
-                            Button(
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        ButtonState.all<Color?>(Colors.green)),
-                                child: const Text(
-                                  'Cancelar',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                }),
-                            Button(
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        ButtonState.all<Color?>(Colors.red)),
-                                child: const Text(
-                                  'Eliminar',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onPressed: () {
-                                  context.read<ProductBloc>().add(
-                                      ProductEvent.delete(
-                                          nameProduct:
-                                              widget.productModel.name));
-                                  context
-                                      .read<ProductBloc>()
-                                      .add(const ProductEvent.getActive());
-                                  Navigator.pop(context);
-                                }),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: const Icon(FluentIcons.delete),
+                          );
+                        },
+                      );
+                    },
+                    child: const Icon(FluentIcons.delete),
+                  ),
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  void confirmChanges(BuildContext context, ProductModel productModel) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ContentDialog(
+          title: const Text('SiGeSt'),
+          content: const Text('¿Esta seguro de actualizar el producto?'),
+          actions: [
+            Button(
+              style: ButtonStyle(
+                  backgroundColor: ButtonState.all<Color?>(Colors.green)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Cancelar',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            Button(
+              style: ButtonStyle(
+                  backgroundColor:
+                      ButtonState.all<Color?>(Colors.yellow.darker)),
+              onPressed: () {
+                context
+                    .read<ProductBloc>()
+                    .add(ProductEvent.add(product: productModel));
+                context.read<ProductBloc>().add(const ProductEvent.getActive());
+                Navigator.pop(context);
+                showSnackbar(
+                  context,
+                  Snackbar(
+                    extended: true,
+                    content: Text(
+                        'Se actualizo correctamente el producto: ${productModel.name}.'),
+                  ),
+                );
+              },
+              child: const Text(
+                'Actualizar',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

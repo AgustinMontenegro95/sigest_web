@@ -1,8 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
-import 'package:sigest/web/domain/bloc/product/product_bloc.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/custom_text_form.dart';
 
 import 'product_pdf_view.dart';
@@ -55,36 +53,39 @@ class ContentProduct extends StatelessWidget {
             Text("Producto".toUpperCase(),
                 style: TextStyle(fontSize: 35, color: Colors.blue)),
             Expanded(child: Container()),
-            Button(
-              child: Image.asset(
-                'assets/images/pdf.png',
-                fit: BoxFit.cover,
-                width: 30,
-              ),
-              onPressed: () {
-                //imprimir pdf
-                Navigator.push(
-                  context,
-                  FluentPageRoute(
-                    builder: (context) => ProductPdfView(
-                      userModel: userModel,
-                      productModel: ProductModel(
-                          category: categoryController.text,
-                          uId: widget.productModel.uId,
-                          code: widget.productModel.code,
-                          name: widget.productModel.name,
-                          amount: int.parse(amountController.text),
-                          state: widget.productModel.state,
-                          desc: descController.text,
-                          price: double.parse(priceController.text),
-                          provider: providerController.text,
-                          purchasePrice:
-                              double.parse(purchasePriceController.text),
-                          entryDate: widget.productModel.entryDate),
+            Tooltip(
+              message: 'Ver en PDF',
+              child: Button(
+                child: Image.asset(
+                  'assets/images/pdf.png',
+                  fit: BoxFit.cover,
+                  width: 30,
+                ),
+                onPressed: () {
+                  //imprimir pdf
+                  Navigator.push(
+                    context,
+                    FluentPageRoute(
+                      builder: (context) => ProductPdfView(
+                        userModel: userModel,
+                        productModel: ProductModel(
+                            category: categoryController.text,
+                            uId: widget.productModel.uId,
+                            code: widget.productModel.code,
+                            name: widget.productModel.name,
+                            amount: int.parse(amountController.text),
+                            state: widget.productModel.state,
+                            desc: descController.text,
+                            price: double.parse(priceController.text),
+                            provider: providerController.text,
+                            purchasePrice:
+                                double.parse(purchasePriceController.text),
+                            entryDate: widget.productModel.entryDate),
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 30),
@@ -95,7 +96,7 @@ class ContentProduct extends StatelessWidget {
                   width: 30,
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pop([false]);
                 },
               ),
             ),
@@ -211,7 +212,7 @@ class ContentProduct extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pop([false]);
                 },
               ),
             ),
@@ -244,40 +245,13 @@ class ContentProduct extends StatelessWidget {
                       entryDate: widget.productModel.entryDate,
                     );
                     //if (_formKey.currentState!.validate()) {
-                    context
-                        .read<ProductBloc>()
-                        .add(ProductEvent.add(product: productModel));
-                    context
-                        .read<ProductBloc>()
-                        .add(const ProductEvent.getPending());
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return ContentDialog(
-                          title: const Text('SiGeSt'),
-                          content: const Text(
-                              'Se agrego correctamente el producto.'),
-                          actions: [
-                            Button(
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        ButtonState.all<Color?>(Colors.green)),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text(
-                                  'Aceptar',
-                                  style: TextStyle(color: Colors.white),
-                                ))
-                          ],
-                        );
-                      },
-                    );
+                    Navigator.of(context).pop([true, productModel]);
                     /* } else {
                       print("error");
                     } */
+                  } else {
+                    Navigator.of(context).pop([false]);
                   }
-                  Navigator.pop(context);
                 },
               ),
             ),

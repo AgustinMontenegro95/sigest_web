@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sigest/constants/constant.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
 import 'package:sigest/web/domain/bloc/product/product_bloc.dart';
+import 'package:sigest/web/home/tabs/stock/widgets/product_search.dart';
 
 import 'widgets/all_product_pdf_view.dart';
 import 'widgets/const_product_row.dart';
@@ -18,6 +19,7 @@ class StockTab extends StatefulWidget {
 }
 
 class _StockTabState extends State<StockTab> {
+  final autoSuggestBox = TextEditingController();
   @override
   Widget build(BuildContext context) {
     String? comboBoxValue;
@@ -26,6 +28,12 @@ class _StockTabState extends State<StockTab> {
         return Container(
           child: state.maybeWhen(
               loaded: (productList) {
+                // obtengo los nombres de los productos
+                List<String> nameProductsList = [];
+                for (var i = 0; i < productList!.length; i++) {
+                  nameProductsList.add(productList[i]!.name);
+                }
+                //
                 return ScaffoldPage(
                   header: Column(
                     children: [
@@ -36,6 +44,30 @@ class _StockTabState extends State<StockTab> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(left: 15),
+                                width: 400,
+                                child: ProductSearch(
+                                  nameProductsList: nameProductsList,
+                                  userModel: widget.userModel,
+                                  productList: productList,
+                                ),
+                              ),
+                              Container(
+                                width: 34,
+                                height: 34,
+                                decoration: BoxDecoration(color: Colors.blue),
+                                child: const Icon(
+                                  FluentIcons.search,
+                                  color: Colors.white,
+                                  size: 25,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Expanded(child: Container()),
                           Container(
                             width: 200,
                             decoration: BoxDecoration(
@@ -68,24 +100,27 @@ class _StockTabState extends State<StockTab> {
                               },
                             ),
                           ),
-                          Button(
-                            child: Image.asset(
-                              'assets/images/pdf.png',
-                              fit: BoxFit.cover,
-                              width: 18,
-                            ),
-                            onPressed: () {
-                              //imprimir pdf
-                              Navigator.push(
-                                context,
-                                FluentPageRoute(
-                                  builder: (context) => AllProductPdfView(
-                                    userModel: widget.userModel,
-                                    productsList: productList,
+                          Tooltip(
+                            message: 'Ver en PDF',
+                            child: Button(
+                              child: Image.asset(
+                                'assets/images/pdf.png',
+                                fit: BoxFit.cover,
+                                width: 18,
+                              ),
+                              onPressed: () {
+                                //imprimir pdf
+                                Navigator.push(
+                                  context,
+                                  FluentPageRoute(
+                                    builder: (context) => AllProductPdfView(
+                                      userModel: widget.userModel,
+                                      productsList: productList,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                           const SizedBox(
                             width: 20,
@@ -107,7 +142,7 @@ class _StockTabState extends State<StockTab> {
                         children: [
                           ListView.separated(
                             shrinkWrap: true,
-                            itemCount: productList!.length,
+                            itemCount: productList.length,
                             itemBuilder: (context, index) {
                               return ProductRow(
                                 userModel: widget.userModel,

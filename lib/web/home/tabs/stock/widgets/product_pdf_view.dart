@@ -51,7 +51,7 @@ class _ProductPdfViewState extends State<ProductPdfView> {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
 
     String formattedDate = date.toString().substring(0, 19);
-    final image = await imageFromAssetBundle('assets/images/icon/1.png');
+    final image = await imageFromAssetBundle('assets/images/icon/icon.png');
     final logo = pw.Image(image);
     pdf.addPage(
       pw.Page(
