@@ -2,7 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/closed_button.dart';
-import 'package:sigest/web/home/tabs/stock/widgets/custom_text_form.dart';
+import 'package:sigest/web/home/widgets/custom_text_form.dart';
 
 import 'product_pdf_view.dart';
 import 'product_row.dart';

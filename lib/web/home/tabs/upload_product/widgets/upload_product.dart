@@ -4,7 +4,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/web/domain/bloc/product/product_bloc.dart';
-import 'package:sigest/web/home/tabs/stock/widgets/custom_text_form.dart';
+import 'package:sigest/web/home/widgets/custom_text_form.dart';
 
 class UploadProduct extends StatelessWidget {
   UploadProduct({

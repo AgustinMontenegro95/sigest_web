@@ -4,6 +4,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/domain/bloc/auth/auth_bloc.dart';
 
 import 'package:sigest/domain/bloc/user/user_bloc.dart';
@@ -65,6 +66,18 @@ class MyApp extends StatelessWidget {
           )
         ],
         child: FluentApp(
+          builder: (context, widget) => ResponsiveWrapper.builder(
+              ClampingScrollWrapper.builder(context, widget!),
+              defaultScale: true,
+              minWidth: 450,
+              defaultName: TABLET,
+              breakpoints: [
+                const ResponsiveBreakpoint.resize(360),
+                const ResponsiveBreakpoint.resize(450, name: MOBILE),
+                const ResponsiveBreakpoint.resize(640, name: 'MOBILE_LARGE'),
+                const ResponsiveBreakpoint.autoScale(700, name: TABLET),
+              ],
+              background: Container(color: Colors.black)),
           debugShowCheckedModeBanner: false,
           title: 'SiGeSt',
           routes: customRoutes,

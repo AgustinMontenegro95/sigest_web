@@ -54,21 +54,21 @@ class FormAction extends StatelessWidget {
             ),
             child: const Text('Cargar', style: TextStyle(color: Colors.white)),
             onPressed: () {
-              DateTime now = DateTime.now();
-              ProductModel productModel = ProductModel(
-                uId: product.name,
-                code: product.code,
-                name: product.name,
-                amount: int.parse(amountController.text),
-                state: true,
-                category: categoryController.text,
-                desc: descController.text,
-                price: double.parse(priceController.text),
-                purchasePrice: double.parse(purchasePriceController.text),
-                provider: providerController.text,
-                entryDate: now.toString(),
-              );
               if (_formKey.currentState!.validate()) {
+                DateTime now = DateTime.now();
+                ProductModel productModel = ProductModel(
+                  uId: product.name,
+                  code: product.code,
+                  name: product.name,
+                  amount: int.parse(amountController.text),
+                  state: true,
+                  category: categoryController.text,
+                  desc: descController.text,
+                  price: double.parse(priceController.text),
+                  purchasePrice: double.parse(purchasePriceController.text),
+                  provider: providerController.text,
+                  entryDate: now.toString(),
+                );
                 context
                     .read<ProductBloc>()
                     .add(ProductEvent.add(product: productModel));
@@ -76,6 +76,7 @@ class FormAction extends StatelessWidget {
                     .read<ProductBloc>()
                     .add(const ProductEvent.getPending());
                 clearAllForm();
+                Navigator.pop(context);
                 showDialog(
                   context: context,
                   builder: (context) {
@@ -100,9 +101,30 @@ class FormAction extends StatelessWidget {
                   },
                 );
               } else {
-                print("error");
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ContentDialog(
+                      title: const Text('SiGeSt'),
+                      content:
+                          const Text('Debes completar los campos solicitados.'),
+                      actions: [
+                        Button(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    ButtonState.all<Color?>(Colors.green)),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              'Aceptar',
+                              style: TextStyle(color: Colors.white),
+                            ))
+                      ],
+                    );
+                  },
+                );
               }
-              Navigator.pop(context);
             },
           ),
         ),

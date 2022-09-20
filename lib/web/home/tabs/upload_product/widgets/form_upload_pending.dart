@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
-import 'package:sigest/web/home/tabs/stock/widgets/custom_text_form.dart';
+import 'package:sigest/web/home/widgets/custom_text_form.dart';
 
 class FormUploadPending extends StatelessWidget {
   const FormUploadPending({
