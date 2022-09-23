@@ -1,7 +1,10 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
+import 'package:sigest/domain/bloc/log/log_bloc.dart';
 import 'package:sigest/web/domain/bloc/product/product_bloc.dart';
+import 'package:sigest/web/home/tabs/help/help_tab.dart';
+import 'package:sigest/web/home/tabs/log/log_tab.dart';
 import 'package:sigest/web/home/tabs/profile/profile_tab.dart';
 import 'package:sigest/web/home/tabs/stock/stock_tab.dart';
 import 'package:sigest/web/home/tabs/upload_product/upload_tab.dart';
@@ -21,30 +24,51 @@ class _NavigatorViewWidgetState extends State<NavigatorViewWidget> {
   Widget build(BuildContext context) {
     return NavigationView(
       /* appBar: const NavigationAppBar(
-                leading: Center(
-                  child: FlutterLogo(size: 25),
-                ),
-              ), */
+        leading: Center(
+          child: FlutterLogo(size: 25),
+        ),
+      ), */
       pane: NavigationPane(
         header: Padding(
           padding: const EdgeInsets.only(left: 20),
-          child: DefaultTextStyle(
-            style: FluentTheme.of(context).typography.title!,
-            child: const Text('SiGeSt'),
+          child: SizedBox(
+            width: 120,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset('assets/images/icon/icon-s.png'),
+                DefaultTextStyle(
+                  style: FluentTheme.of(context).typography.title!,
+                  child: const Text(
+                    'SiGeSt',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Color.fromARGB(255, 52, 180, 255)),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         items: [
           PaneItem(
-            icon: const Icon(FluentIcons.stock_down),
+            icon: const Icon(FluentIcons.add_in),
             title: const Text('Stock'),
           ),
           PaneItem(
-            icon: const Icon(FluentIcons.stock_up),
+            icon: const Icon(FluentIcons.add_to),
             title: const Text('Alta Producto'),
           ),
           PaneItem(
             icon: const Icon(FluentIcons.profile_search),
             title: const Text('Perfil'),
+          ),
+          PaneItem(
+            icon: const Icon(FluentIcons.alert_settings),
+            title: const Text('Ayuda'),
+          ),
+          PaneItem(
+            icon: const Icon(FluentIcons.user_event),
+            title: const Text('Log'),
           ),
         ],
         selected: _currentIdex,
@@ -55,6 +79,9 @@ class _NavigatorViewWidgetState extends State<NavigatorViewWidget> {
           }
           if (i == 1) {
             context.read<ProductBloc>().add(const ProductEvent.getPending());
+          }
+          if (i == 4) {
+            context.read<LogBloc>().add(const LogEvent.get());
           }
           setState(() {
             _currentIdex = i;
@@ -67,6 +94,8 @@ class _NavigatorViewWidgetState extends State<NavigatorViewWidget> {
           StockTab(userModel: widget.userModel),
           UploadTab(userModel: widget.userModel),
           ProfilTab(userModel: widget.userModel),
+          HelpTab(userModel: widget.userModel),
+          LogTab(userModel: widget.userModel),
         ],
       ),
     );

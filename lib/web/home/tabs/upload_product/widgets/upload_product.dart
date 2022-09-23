@@ -1,8 +1,8 @@
-import 'dart:html';
-
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sigest/data/models/log_model/log_model.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
+import 'package:sigest/domain/bloc/log/log_bloc.dart';
 import 'package:sigest/web/domain/bloc/product/product_bloc.dart';
 import 'package:sigest/web/home/widgets/custom_text_form.dart';
 
@@ -162,6 +162,14 @@ class UploadProduct extends StatelessWidget {
                             provider: providerController.text,
                             entryDate: DateTime.now().toString(),
                           );
+                          DateTime now = DateTime.now();
+                          final log = LogModel(
+                              action: 'Cargar nuevo',
+                              desc:
+                                  'Cargó un nuevo producto. [Código: ${codeController.text.trim()}, Nombre: ${nameController.text.trim()}]',
+                              date:
+                                  '${now.day}/${now.month}/${now.year} - ${now.hour}:${now.minute < 10 ? '0${now.minute}' : now.minute}');
+                          context.read<LogBloc>().add(LogEvent.add(log: log));
                           context
                               .read<ProductBloc>()
                               .add(ProductEvent.add(product: productModel));
@@ -200,7 +208,9 @@ class UploadProduct extends StatelessWidget {
                               return ContentDialog(
                                 title: const Text('SiGeSt'),
                                 content: const Text(
-                                    'Debes completar los campos solicitados.'),
+                                  'Debes completar correctamente los campos solicitados.',
+                                  style: TextStyle(fontSize: 20),
+                                ),
                                 actions: [
                                   Button(
                                       style: ButtonStyle(
@@ -212,7 +222,8 @@ class UploadProduct extends StatelessWidget {
                                       },
                                       child: const Text(
                                         'Aceptar',
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
                                       ))
                                 ],
                               );

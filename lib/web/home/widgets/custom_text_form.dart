@@ -35,7 +35,7 @@ class CustomTextFormBox extends StatelessWidget {
           ? (value) {
               bool isNum = double.tryParse(value!) != null;
               if ((value == null || value.isEmpty) || !isNum) {
-                return 'Debe ingresar $label (tipo numerico).';
+                return 'Debe ingresar $label (numérico).';
               }
               return null;
             }

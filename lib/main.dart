@@ -6,10 +6,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/domain/bloc/auth/auth_bloc.dart';
+import 'package:sigest/domain/bloc/log/log_bloc.dart';
 
 import 'package:sigest/domain/bloc/user/user_bloc.dart';
 
 import 'package:sigest/domain/repositories/auth_repository.dart';
+import 'package:sigest/domain/repositories/log_repository.dart';
 import 'package:sigest/domain/repositories/product_repository.dart';
 import 'package:sigest/domain/repositories/user_repository.dart';
 
@@ -46,6 +48,9 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => ProductRepository(),
         ),
+        RepositoryProvider(
+          create: (context) => LogRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -63,10 +68,15 @@ class MyApp extends StatelessWidget {
                 productRepository:
                     RepositoryProvider.of<ProductRepository>(context))
               ..add(const ProductEvent.getActive()),
+          ),
+          BlocProvider(
+            create: (context) => LogBloc(
+                logRepository: RepositoryProvider.of<LogRepository>(context))
+              ..add(const LogEvent.get()),
           )
         ],
         child: FluentApp(
-          builder: (context, widget) => ResponsiveWrapper.builder(
+          /* builder: (context, widget) => ResponsiveWrapper.builder(
               ClampingScrollWrapper.builder(context, widget!),
               defaultScale: true,
               minWidth: 450,
@@ -77,7 +87,7 @@ class MyApp extends StatelessWidget {
                 const ResponsiveBreakpoint.resize(640, name: 'MOBILE_LARGE'),
                 const ResponsiveBreakpoint.autoScale(700, name: TABLET),
               ],
-              background: Container(color: Colors.black)),
+              background: Container(color: Colors.black)), */
           debugShowCheckedModeBanner: false,
           title: 'SiGeSt',
           routes: customRoutes,

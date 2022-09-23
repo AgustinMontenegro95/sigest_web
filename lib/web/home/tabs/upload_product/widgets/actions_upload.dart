@@ -1,6 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sigest/data/models/log_model/log_model.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
+import 'package:sigest/domain/bloc/log/log_bloc.dart';
 import 'package:sigest/web/domain/bloc/product/product_bloc.dart';
 
 class FormAction extends StatelessWidget {
@@ -69,6 +71,13 @@ class FormAction extends StatelessWidget {
                   provider: providerController.text,
                   entryDate: now.toString(),
                 );
+                final log = LogModel(
+                    action: 'Cargar pendiente',
+                    desc:
+                        'Cargó un producto pendiente. [Código: ${product.code}, Nombre: ${product.name}]',
+                    date:
+                        '${now.day}/${now.month}/${now.year} - ${now.hour}:${now.minute < 10 ? '0${now.minute}' : now.minute}');
+                context.read<LogBloc>().add(LogEvent.add(log: log));
                 context
                     .read<ProductBloc>()
                     .add(ProductEvent.add(product: productModel));

@@ -21,7 +21,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         try {
           List<ProductModel?> productList;
           switch (sort) {
-            case 'Precio ascendente':
+            case 'Precio venta ascendente':
               productList =
                   await productRepository.getProductsByPrice(sort: true);
               break;
@@ -36,6 +36,22 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             case 'Cantidad descendente':
               productList =
                   await productRepository.getProductsByAmount(sort: false);
+              break;
+            case 'Nombre ascendente':
+              productList =
+                  await productRepository.getProductsByName(sort: true);
+              break;
+            case 'Nombre descendente':
+              productList =
+                  await productRepository.getProductsByName(sort: false);
+              break;
+            case 'Precio compra ascendente':
+              productList = await productRepository.getProductsByPurchasePrice(
+                  sort: false);
+              break;
+            case 'Precio compra descendente':
+              productList = await productRepository.getProductsByPurchasePrice(
+                  sort: false);
               break;
             default:
               productList =

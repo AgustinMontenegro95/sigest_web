@@ -43,10 +43,14 @@ ButtonStyle primaryButtonStyle = ButtonStyle(
 
 //List values ComboBox
 List<String> valuesComboBox = [
-  'Precio ascendente',
-  'Precio descendente',
+  'Precio venta ascendente',
+  'Precio venta descendente',
   'Cantidad ascendente',
-  'Cantidad descendente'
+  'Cantidad descendente',
+  'Nombre ascendente',
+  'Nombre descendente',
+  'Precio compra ascendente',
+  'Precio compra descendente'
 ];
 
 // width columns

@@ -2,8 +2,10 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readmore/readmore.dart';
 import 'package:sigest/constants/constant.dart';
+import 'package:sigest/data/models/log_model/log_model.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
+import 'package:sigest/domain/bloc/log/log_bloc.dart';
 import 'package:sigest/web/domain/bloc/product/product_bloc.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/content_product.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/product_attribute.dart';
@@ -57,9 +59,13 @@ class _ProductRowState extends State<ProductRow> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: widget.index % 2 == 0
-              ? Colors.grey.withOpacity(0.2)
-              : Colors.white),
+          color: widget.productModel.amount! <= 5
+              ? Colors.red.withOpacity(0.3)
+              : widget.productModel.amount! <= 10
+                  ? Colors.yellow.withOpacity(0.4)
+                  : widget.index % 2 == 0
+                      ? Colors.grey.withOpacity(0.2)
+                      : Colors.white),
       padding: const EdgeInsets.symmetric(vertical: 13),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -102,11 +108,8 @@ class _ProductRowState extends State<ProductRow> {
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * amountWidthCol,
-            child: Text(
-              widget.productModel.amount.toString(),
-              textAlign: TextAlign.center,
-              style: styleTextProductRow,
-            ),
+            child: Text(widget.productModel.amount.toString(),
+                textAlign: TextAlign.center, style: styleTextProductRow),
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * purchasePriceWidthCol,
@@ -254,6 +257,16 @@ class _ProductRowState extends State<ProductRow> {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   onPressed: () {
+                                    DateTime now = DateTime.now();
+                                    final log = LogModel(
+                                        action: 'Eliminar activo',
+                                        desc:
+                                            'Eliminó un producto activo. [Código: ${widget.productModel.code}, Nombre: ${widget.productModel.name}]',
+                                        date:
+                                            '${now.day}/${now.month}/${now.year} - ${now.hour}:${now.minute < 10 ? '0${now.minute}' : now.minute}');
+                                    context
+                                        .read<LogBloc>()
+                                        .add(LogEvent.add(log: log));
                                     context.read<ProductBloc>().add(
                                         ProductEvent.delete(
                                             nameProduct:
@@ -323,6 +336,14 @@ class _ProductRowState extends State<ProductRow> {
                   backgroundColor:
                       ButtonState.all<Color?>(Colors.yellow.darker)),
               onPressed: () {
+                DateTime now = DateTime.now();
+                final log = LogModel(
+                    action: 'Actualizar activo',
+                    desc:
+                        'Actualizó un producto activo. [Código: ${widget.productModel.code}, Nombre: ${widget.productModel.name}]',
+                    date:
+                        '${now.day}/${now.month}/${now.year} - ${now.hour}:${now.minute < 10 ? '0${now.minute}' : now.minute}');
+                context.read<LogBloc>().add(LogEvent.add(log: log));
                 context
                     .read<ProductBloc>()
                     .add(ProductEvent.add(product: productModel));

@@ -19,20 +19,36 @@ class SignOut extends StatelessWidget {
             context: context,
             builder: (context) {
               return ContentDialog(
-                title: const Text('Alerta'),
-                content: const Text('¿Esta seguro?'),
+                title: const Text(
+                  'Sigest',
+                  style: TextStyle(fontSize: 25),
+                ),
+                content: const Text(
+                  '¿Está seguro?',
+                  style: TextStyle(fontSize: 20),
+                ),
                 actions: [
                   Button(
-                    child: const Text('OK'),
-                    onPressed: () {
-                      context.read<AuthBloc>().add(SignOutRequested());
-                    },
-                  ),
-                  Button(
-                    child: const Text('Cancel'),
+                    style: ButtonStyle(
+                        backgroundColor: ButtonState.all<Color?>(Colors.green)),
                     onPressed: () {
                       Navigator.pop(context);
                     },
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  ),
+                  Button(
+                    style: ButtonStyle(
+                        backgroundColor: ButtonState.all<Color?>(Colors.red)),
+                    onPressed: () {
+                      context.read<AuthBloc>().add(SignOutRequested());
+                    },
+                    child: const Text(
+                      'Cerrar sesión',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
                   ),
                 ],
               );

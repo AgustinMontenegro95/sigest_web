@@ -107,6 +107,31 @@ class ProductRepository {
     }
   }
 
+  Future<List<ProductModel?>> getProductsByPurchasePrice(
+      {required bool sort}) async {
+    final user = _firebaseAuth.currentUser!.email;
+    List<ProductModel?> productList = [];
+    ProductModel productModel;
+    try {
+      await _store
+          .collection(user.toString())
+          .orderBy('purchasePrice', descending: sort)
+          .get()
+          .then((value) {
+        for (var element in value.docs) {
+          productModel = ProductModel.fromJson(element.data());
+          if (productModel.state) {
+            productList.add(productModel);
+          }
+        }
+      });
+
+      return productList;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   Future<List<ProductModel?>> getProductsByAmount({required bool sort}) async {
     final user = _firebaseAuth.currentUser!.email;
     List<ProductModel?> productList = [];
@@ -115,6 +140,30 @@ class ProductRepository {
       await _store
           .collection(user.toString())
           .orderBy('amount', descending: sort)
+          .get()
+          .then((value) {
+        for (var element in value.docs) {
+          productModel = ProductModel.fromJson(element.data());
+          if (productModel.state) {
+            productList.add(productModel);
+          }
+        }
+      });
+
+      return productList;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<List<ProductModel?>> getProductsByName({required bool sort}) async {
+    final user = _firebaseAuth.currentUser!.email;
+    List<ProductModel?> productList = [];
+    ProductModel productModel;
+    try {
+      await _store
+          .collection(user.toString())
+          .orderBy('name', descending: sort)
           .get()
           .then((value) {
         for (var element in value.docs) {

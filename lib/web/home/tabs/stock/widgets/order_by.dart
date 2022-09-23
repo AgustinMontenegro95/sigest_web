@@ -11,7 +11,7 @@ class OrderBy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
+      width: 250,
       decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
       margin: const EdgeInsets.only(right: 20, bottom: 20),
       child: Combobox<String>(
