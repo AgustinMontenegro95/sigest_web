@@ -15,22 +15,22 @@ class Contact extends StatelessWidget {
         constraints: const BoxConstraints(maxWidth: 800),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 16),
               child: Text("¿Tienes problemas? Contactanos para solucionarlos.",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                     shadows: <Shadow>[
-                      const Shadow(
+                      Shadow(
                         offset: Offset(0.0, 0.0),
                         blurRadius: 3.0,
                         color: Colors.white,
                       ),
                       Shadow(
-                        offset: Offset(5.0, 5.0),
-                        blurRadius: 8.0,
-                        color: Colors.blue,
+                        offset: Offset(1.0, 1.0),
+                        blurRadius: 3.0,
+                        color: Colors.white,
                       ),
                     ],
                   )),

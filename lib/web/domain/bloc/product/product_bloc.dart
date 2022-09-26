@@ -81,6 +81,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           print("error$e");
         }
       },
+      /* add: (ProductModel? product) async {
+        emit(const _Loading());
+        try {
+          ProductModel? prod =
+              await productRepository.isCodeExists(product: product);
+          print(prod);
+          if (prod == null) {
+            print("entre");
+            await productRepository.addProduct(product: product);
+          }
+        } catch (e) {
+          print("error$e");
+        }
+      }, */
       delete: (String? nameProduct) async {
         emit(const _Loading());
         try {

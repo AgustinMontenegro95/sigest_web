@@ -162,13 +162,12 @@ class UploadProduct extends StatelessWidget {
                             provider: providerController.text,
                             entryDate: DateTime.now().toString(),
                           );
-                          DateTime now = DateTime.now();
                           final log = LogModel(
-                              action: 'Cargar nuevo',
-                              desc:
-                                  'Cargó un nuevo producto. [Código: ${codeController.text.trim()}, Nombre: ${nameController.text.trim()}]',
-                              date:
-                                  '${now.day}/${now.month}/${now.year} - ${now.hour}:${now.minute < 10 ? '0${now.minute}' : now.minute}');
+                            action: 'Cargar nuevo',
+                            desc:
+                                'Cargó un nuevo producto. [Código: ${codeController.text.trim()}, Nombre: ${nameController.text.trim()}]',
+                            date: DateTime.now().toString().substring(0, 19),
+                          );
                           context.read<LogBloc>().add(LogEvent.add(log: log));
                           context
                               .read<ProductBloc>()
@@ -177,29 +176,13 @@ class UploadProduct extends StatelessWidget {
                               .read<ProductBloc>()
                               .add(const ProductEvent.getPending());
                           clearAllForm();
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return ContentDialog(
-                                title: const Text('SiGeSt'),
-                                content: const Text(
-                                    'Se agrego correctamente el producto.'),
-                                actions: [
-                                  Button(
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              ButtonState.all<Color?>(
-                                                  Colors.green)),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'Aceptar',
-                                        style: TextStyle(color: Colors.white),
-                                      ))
-                                ],
-                              );
-                            },
+                          showSnackbar(
+                            context,
+                            Snackbar(
+                              extended: true,
+                              content: Text(
+                                  'Se agregó correctamente el nuevo producto: ${productModel.name}.'),
+                            ),
                           );
                         } else {
                           showDialog(

@@ -1,5 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sigest/data/models/log_model/log_model.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
+import 'package:sigest/domain/bloc/log/log_bloc.dart';
 import 'package:sigest/domain/repositories/contact_repository.dart';
 import 'package:sigest/web/home/tabs/help/widgets/text_form_contact.dart';
 
@@ -57,13 +60,21 @@ class _ContactFormState extends State<ContactForm> {
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 ContactRepository().sendEmail(
-                    name: widget.userModel.name,
-                    email: widget.userModel.email,
-                    subject: subjectController.text.trim(),
-                    message: "      Email: ${widget.userModel.email}."
-                        "     Nombre: ${widget.userModel.name}."
-                        "     Mensaje: ${descController.text.trim()}.",
-                    context: context);
+                  name: widget.userModel.name,
+                  email: widget.userModel.email,
+                  subject: subjectController.text.trim(),
+                  message: "      Email: ${widget.userModel.email}."
+                      "     Nombre: ${widget.userModel.name}."
+                      "     Mensaje: ${descController.text.trim()}.",
+                  context: context,
+                );
+                final log = LogModel(
+                  action: 'Envio consulta',
+                  desc:
+                      'Envió una nueva consulta. [Contenido: ${descController.text.trim()}]',
+                  date: DateTime.now().toString().substring(0, 19),
+                );
+                context.read<LogBloc>().add(LogEvent.add(log: log));
               }
               subjectController.clear();
               descController.clear();

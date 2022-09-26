@@ -122,13 +122,14 @@ class _PendingProductRowState extends State<PendingProductRow> {
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 onPressed: () {
-                                  DateTime now = DateTime.now();
                                   final log = LogModel(
-                                      action: 'Eliminar pendiente',
-                                      desc:
-                                          'Eliminó el producto pendiente. [Código: ${widget.productModel.code}, Nombre: ${widget.productModel.name}]',
-                                      date:
-                                          '${now.day}/${now.month}/${now.year} - ${now.hour}:${now.minute < 10 ? '0${now.minute}' : now.minute}');
+                                    action: 'Eliminar pendiente',
+                                    desc:
+                                        'Eliminó el producto pendiente. [Código: ${widget.productModel.code}, Nombre: ${widget.productModel.name}]',
+                                    date: DateTime.now()
+                                        .toString()
+                                        .substring(0, 19),
+                                  );
                                   context
                                       .read<LogBloc>()
                                       .add(LogEvent.add(log: log));
@@ -140,6 +141,14 @@ class _PendingProductRowState extends State<PendingProductRow> {
                                       .read<ProductBloc>()
                                       .add(const ProductEvent.getPending());
                                   Navigator.pop(context);
+                                  showSnackbar(
+                                    context,
+                                    Snackbar(
+                                      extended: true,
+                                      content: Text(
+                                          'Se eliminó correctamente el producto pendiente: ${widget.productModel.name}.'),
+                                    ),
+                                  );
                                 },
                               ),
                             ],

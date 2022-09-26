@@ -1,6 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sigest/data/models/log_model/log_model.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
+import 'package:sigest/domain/bloc/log/log_bloc.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/closed_button.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/product_attribute.dart';
 import 'package:sigest/web/home/tabs/stock/widgets/product_pdf_view.dart';
@@ -36,6 +39,13 @@ class ProductSearch extends StatelessWidget {
               break;
             }
           }
+          final log = LogModel(
+            action: 'Buscar producto',
+            desc:
+                'Buscó un producto. [Código: ${productModel.code}, Nombre: ${productModel.name}]',
+            date: DateTime.now().toString().substring(0, 19),
+          );
+          context.read<LogBloc>().add(LogEvent.add(log: log));
           showDialog(
             context: context,
             builder: (context) {

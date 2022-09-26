@@ -21,7 +21,7 @@ class HelpTab extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Opacity(
-                    opacity: 0.3,
+                    opacity: 0.2,
                     child: Image.asset('assets/images/icon/icon-black.png')),
               ),
               Column(

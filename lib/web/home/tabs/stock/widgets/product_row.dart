@@ -257,13 +257,14 @@ class _ProductRowState extends State<ProductRow> {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   onPressed: () {
-                                    DateTime now = DateTime.now();
                                     final log = LogModel(
-                                        action: 'Eliminar activo',
-                                        desc:
-                                            'Eliminó un producto activo. [Código: ${widget.productModel.code}, Nombre: ${widget.productModel.name}]',
-                                        date:
-                                            '${now.day}/${now.month}/${now.year} - ${now.hour}:${now.minute < 10 ? '0${now.minute}' : now.minute}');
+                                      action: 'Eliminar activo',
+                                      desc:
+                                          'Eliminó un producto activo. [Código: ${widget.productModel.code}, Nombre: ${widget.productModel.name}]',
+                                      date: DateTime.now()
+                                          .toString()
+                                          .substring(0, 19),
+                                    );
                                     context
                                         .read<LogBloc>()
                                         .add(LogEvent.add(log: log));
@@ -275,6 +276,14 @@ class _ProductRowState extends State<ProductRow> {
                                         .read<ProductBloc>()
                                         .add(const ProductEvent.getActive());
                                     Navigator.pop(context);
+                                    showSnackbar(
+                                      context,
+                                      Snackbar(
+                                        extended: true,
+                                        content: Text(
+                                            'Se eliminó correctamente el producto: ${widget.productModel.name}.'),
+                                      ),
+                                    );
                                   }),
                             ],
                           );
@@ -336,13 +345,12 @@ class _ProductRowState extends State<ProductRow> {
                   backgroundColor:
                       ButtonState.all<Color?>(Colors.yellow.darker)),
               onPressed: () {
-                DateTime now = DateTime.now();
                 final log = LogModel(
-                    action: 'Actualizar activo',
-                    desc:
-                        'Actualizó un producto activo. [Código: ${widget.productModel.code}, Nombre: ${widget.productModel.name}]',
-                    date:
-                        '${now.day}/${now.month}/${now.year} - ${now.hour}:${now.minute < 10 ? '0${now.minute}' : now.minute}');
+                  action: 'Actualizar activo',
+                  desc:
+                      'Actualizó un producto activo. [Código: ${widget.productModel.code}, Nombre: ${widget.productModel.name}]',
+                  date: DateTime.now().toString().substring(0, 19),
+                );
                 context.read<LogBloc>().add(LogEvent.add(log: log));
                 context
                     .read<ProductBloc>()
@@ -354,7 +362,7 @@ class _ProductRowState extends State<ProductRow> {
                   Snackbar(
                     extended: true,
                     content: Text(
-                        'Se actualizo correctamente el producto: ${productModel.name}.'),
+                        'Se actualizó correctamente el producto: ${productModel.name}.'),
                   ),
                 );
               },

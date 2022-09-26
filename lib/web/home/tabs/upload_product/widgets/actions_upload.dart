@@ -57,7 +57,6 @@ class FormAction extends StatelessWidget {
             child: const Text('Cargar', style: TextStyle(color: Colors.white)),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                DateTime now = DateTime.now();
                 ProductModel productModel = ProductModel(
                   uId: product.name,
                   code: product.code,
@@ -69,14 +68,14 @@ class FormAction extends StatelessWidget {
                   price: double.parse(priceController.text),
                   purchasePrice: double.parse(purchasePriceController.text),
                   provider: providerController.text,
-                  entryDate: now.toString(),
+                  entryDate: DateTime.now().toString(),
                 );
                 final log = LogModel(
-                    action: 'Cargar pendiente',
-                    desc:
-                        'Cargó un producto pendiente. [Código: ${product.code}, Nombre: ${product.name}]',
-                    date:
-                        '${now.day}/${now.month}/${now.year} - ${now.hour}:${now.minute < 10 ? '0${now.minute}' : now.minute}');
+                  action: 'Cargar pendiente',
+                  desc:
+                      'Cargó un producto pendiente. [Código: ${product.code}, Nombre: ${product.name}]',
+                  date: DateTime.now().toString().substring(0, 19),
+                );
                 context.read<LogBloc>().add(LogEvent.add(log: log));
                 context
                     .read<ProductBloc>()
@@ -86,28 +85,13 @@ class FormAction extends StatelessWidget {
                     .add(const ProductEvent.getPending());
                 clearAllForm();
                 Navigator.pop(context);
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ContentDialog(
-                      title: const Text('SiGeSt'),
-                      content:
-                          const Text('Se agrego correctamente el producto.'),
-                      actions: [
-                        Button(
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    ButtonState.all<Color?>(Colors.green)),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text(
-                              'Aceptar',
-                              style: TextStyle(color: Colors.white),
-                            ))
-                      ],
-                    );
-                  },
+                showSnackbar(
+                  context,
+                  Snackbar(
+                    extended: true,
+                    content: Text(
+                        'Se agregó correctamente el producto pendiente: ${productModel.name}.'),
+                  ),
                 );
               } else {
                 showDialog(
