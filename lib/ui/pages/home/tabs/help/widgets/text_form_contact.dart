@@ -30,6 +30,7 @@ class TextFormContact extends StatelessWidget {
         }
         return null;
       },
+      style: const TextStyle(fontSize: 20),
       header: header,
       headerStyle: const TextStyle(
           color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),

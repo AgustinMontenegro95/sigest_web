@@ -13,25 +13,19 @@ class HelpTab extends StatelessWidget {
         header: const PageHeader(
           title: Text('Ayuda'),
         ),
-        content: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Opacity(
-                    opacity: 0.2,
-                    child: Image.asset('assets/images/icon/icon-black.png')),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Contact(userModel: userModel),
-                ],
-              ),
-            ],
-          ),
+        content: Stack(
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: Opacity(
+                  opacity: 0.2,
+                  child: Image.asset('assets/images/icon/icon-black.png')),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Contact(userModel: userModel),
+            )
+          ],
         ));
   }
 }

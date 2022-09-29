@@ -12,7 +12,7 @@ class ConstLogRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _columnName(context, widthCol: 0.1, value: 'Acción'),
+          _columnName(context, widthCol: 0.2, value: 'Acción'),
           _columnName(context, widthCol: 0.4, value: 'Descripción'),
           _columnName(context, widthCol: 0.2, value: 'Fecha'),
         ],

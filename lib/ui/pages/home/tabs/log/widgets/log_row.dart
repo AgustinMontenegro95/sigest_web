@@ -25,7 +25,7 @@ class LogRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.1,
+            width: MediaQuery.of(context).size.width * 0.2,
             child: Text(
               logModel.action,
               textAlign: TextAlign.center,
