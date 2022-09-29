@@ -18,103 +18,83 @@ class _LogInPageState extends State<LogInPage> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime preBackpress = DateTime.now();
-    return WillPopScope(
-      onWillPop: () async {
-        final timegap = DateTime.now().difference(preBackpress);
-        final cantExit = timegap >= const Duration(seconds: 2);
-        preBackpress = DateTime.now();
-        if (cantExit) {
-          //show snackbar
-          const snack = SnackBar(
-            content: Text('Presione otra vez para salir.'),
-            duration: Duration(seconds: 2),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snack);
-          return false; // false will do nothing when back press
-        } else {
-          return true; // true will exit the app
-        }
-      },
-      child: Scaffold(
-        body: BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is Authenticated) {
-              Navigator.pushReplacementNamed(context, '/homeDesktop');
-            }
-            if (state is AuthError) {
-              // Showing the error message if the user has entered invalid credentials
-              kIsWeb
-                  ? showDialog<bool>(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          color: Colors.blue.withOpacity(0.2),
-                          child: AlertDialog(
-                            shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0))),
-                            backgroundColor: Colors.grey[100],
-                            title: Row(
-                              children: [
-                                Image.asset(
-                                  'assets/images/icon/icon.png',
-                                  height: 25,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: Text(
-                                    "Error",
-                                    style: titleAlertDialogStyle,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            //contentPadding: EdgeInsets.all(55),
-                            content: Text(
-                              state.error.substring(11),
-                              style: contentAlertDialogStyle,
-                            ),
-                            actions: [
+    return Scaffold(
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is Authenticated) {
+            Navigator.pushReplacementNamed(context, '/home');
+          }
+          if (state is AuthError) {
+            kIsWeb
+                ? showDialog<bool>(
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        color: Colors.blue.withOpacity(0.2),
+                        child: AlertDialog(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30.0))),
+                          backgroundColor: Colors.grey[100],
+                          title: Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/icon/icon.png',
+                                height: 25,
+                              ),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  style: primaryButtonStyle,
-                                  child: const Text("Aceptar"),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
+                                padding: const EdgeInsets.only(left: 20),
+                                child: Text(
+                                  "Error",
+                                  style: titleAlertDialogStyle,
                                 ),
                               ),
                             ],
                           ),
-                        );
-                      },
-                    )
-                  : ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.error.substring(11))));
-            }
-          },
-          child: BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              if (state is Loading) {
-                return Container();
-              }
-              if (state is UnAuthenticated || state is UnVerified) {
-                // Showing the sign in form if the user is not authenticated
-                return Form(
-                  key: _formKey,
-                  child: Stack(
-                    children: <Widget>[
-                      const Background(),
-                      LoginForm(formKey: _formKey),
-                    ],
-                  ),
-                );
-              }
+                          //contentPadding: EdgeInsets.all(55),
+                          content: Text(
+                            state.error.substring(11),
+                            style: contentAlertDialogStyle,
+                          ),
+                          actions: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton(
+                                style: primaryButtonStyle,
+                                child: const Text("Aceptar"),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )
+                : ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.error.substring(11))));
+          }
+        },
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is Loading) {
               return Container();
-            },
-          ),
+            }
+            if (state is UnAuthenticated || state is UnVerified) {
+              // Showing the sign in form if the user is not authenticated
+              return Form(
+                key: _formKey,
+                child: Stack(
+                  children: <Widget>[
+                    const Background(),
+                    LoginForm(formKey: _formKey),
+                  ],
+                ),
+              );
+            }
+            return Container();
+          },
         ),
       ),
     );

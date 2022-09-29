@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:sigest/web/home/tabs/help/widgets/custom_content_dialog.dart';
+import 'package:sigest/ui/pages/home/tabs/help/widgets/custom_content_dialog.dart';
 
 class ContactRepository {
   Future sendEmail(

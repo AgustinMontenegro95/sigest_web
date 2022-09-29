@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sigest/domain/bloc/auth/auth_bloc.dart';
 import 'package:sigest/ui/pages/login/widgets/reset_pass_form.dart';
 import 'package:sigest/ui/widgets/background.dart';
-import 'package:sigest/web/home/home_web_page.dart';
 
 class ResetPassPage extends StatefulWidget {
   const ResetPassPage({Key? key}) : super(key: key);
@@ -40,8 +39,7 @@ class _ResetPassPageState extends State<ResetPassPage> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is Authenticated) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HomeWebPage()));
+            Navigator.pushReplacementNamed(context, '/home');
           }
           if (state is AuthError) {
             ScaffoldMessenger.of(context)

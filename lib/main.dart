@@ -4,9 +4,9 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/domain/bloc/auth/auth_bloc.dart';
 import 'package:sigest/domain/bloc/log/log_bloc.dart';
+import 'package:sigest/domain/bloc/product/product_bloc.dart';
 
 import 'package:sigest/domain/bloc/user/user_bloc.dart';
 
@@ -16,13 +16,11 @@ import 'package:sigest/domain/repositories/product_repository.dart';
 import 'package:sigest/domain/repositories/user_repository.dart';
 
 import 'package:sigest/firebase_options.dart';
+import 'package:sigest/ui/pages/home/home_page.dart';
 
 import 'package:sigest/ui/pages/login/login_page.dart';
 
 import 'package:sigest/ui/routes/custom_routes.dart';
-
-import 'web/domain/bloc/product/product_bloc.dart';
-import 'web/home/home_web_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -101,7 +99,7 @@ class MyApp extends StatelessWidget {
                   stream: FirebaseAuth.instance.authStateChanges(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return const HomeWebPage();
+                      return const HomePage();
                     }
                     return const LogInPage();
                   },
