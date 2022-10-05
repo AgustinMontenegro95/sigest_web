@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
 import 'package:sigest/domain/bloc/product/product_bloc.dart';
 import 'package:sigest/ui/pages/home/tabs/stock/widgets/order_by.dart';
@@ -37,56 +38,96 @@ class _StockTabState extends State<StockTab> {
                       const PageHeader(
                         title: Text('Stock'),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ResponsiveRowColumn(
+                        rowCrossAxisAlignment: CrossAxisAlignment.start,
+                        rowPadding: const EdgeInsets.only(bottom: 20),
+                        //rowSpacing: 50,
+                        columnCrossAxisAlignment: CrossAxisAlignment.center,
+                        //columnMainAxisSize: MainAxisSize.min,
+                        columnSpacing: 10,
+                        /* columnPadding: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 50), */
+                        layout: ResponsiveWrapper.of(context)
+                                .isSmallerThan('TABLET_LARGE')
+                            ? ResponsiveRowColumnType.COLUMN
+                            : ResponsiveRowColumnType.ROW,
                         children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.only(left: 15),
-                                width: 400,
-                                child: ProductSearch(
-                                  nameProductsList: nameProductsList,
-                                  userModel: widget.userModel,
-                                  productList: productList,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 34,
-                                height: 34,
-                                child: Icon(
-                                  FluentIcons.search,
-                                  color: Colors.blue,
-                                  size: 25,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Expanded(child: Container()),
-                          const OrderBy(),
-                          Tooltip(
-                            message: 'Ver en PDF',
-                            child: Button(
-                              child: Image.asset(
-                                'assets/images/pdf.png',
-                                fit: BoxFit.cover,
-                                width: 18,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  FluentPageRoute(
-                                    builder: (context) => AllProductPdfView(
-                                      userModel: widget.userModel,
-                                      productsList: productList,
-                                    ),
+                          ResponsiveRowColumnItem(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  width: ResponsiveWrapper.of(context)
+                                          .isSmallerThan('TABLET_LARGE')
+                                      ? ResponsiveWrapper.of(context)
+                                              .isSmallerThan(TABLET)
+                                          ? MediaQuery.of(context).size.width *
+                                              0.85
+                                          : MediaQuery.of(context).size.width *
+                                              0.6
+                                      : 400,
+                                  child: ProductSearch(
+                                    nameProductsList: nameProductsList,
+                                    userModel: widget.userModel,
+                                    productList: productList,
                                   ),
-                                );
-                              },
+                                ),
+                                SizedBox(
+                                  width: 34,
+                                  height: 34,
+                                  child: Icon(
+                                    FluentIcons.search,
+                                    color: Colors.blue,
+                                    size: 25,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(width: 20),
+                          if (ResponsiveWrapper.of(context)
+                              .isLargerThan(TABLET))
+                            ResponsiveRowColumnItem(
+                                child: Expanded(child: Container())),
+                          ResponsiveRowColumnItem(
+                            child: SizedBox(
+                              width: ResponsiveWrapper.of(context)
+                                      .isSmallerThan(TABLET)
+                                  ? MediaQuery.of(context).size.width * 0.85
+                                  : 320,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const OrderBy(),
+                                  Tooltip(
+                                    message: 'Ver en PDF',
+                                    child: Button(
+                                      child: Image.asset(
+                                        'assets/images/pdf.png',
+                                        fit: BoxFit.cover,
+                                        width: 18,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          FluentPageRoute(
+                                            builder: (context) =>
+                                                AllProductPdfView(
+                                              userModel: widget.userModel,
+                                              productsList: productList,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          ResponsiveRowColumnItem(
+                              child: const SizedBox(width: 20)),
                         ],
                       ),
                       const ConstProductRow(),

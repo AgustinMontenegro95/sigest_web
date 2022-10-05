@@ -13,7 +13,7 @@ class ConstPendingProductRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width * codeWidthCol,
+            width: MediaQuery.of(context).size.width * codeWidthColLarge,
             child: Text(
               "Código",
               style: styleTextConstProductRow,
@@ -21,7 +21,7 @@ class ConstPendingProductRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * nameWidthCol,
+            width: MediaQuery.of(context).size.width * nameWidthColLarge,
             child: Text(
               "Nombre",
               style: styleTextConstProductRow,
@@ -29,7 +29,7 @@ class ConstPendingProductRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * amountWidthCol,
+            width: MediaQuery.of(context).size.width * amountWidthColLarge,
             child: Text(
               "Cantidad",
               style: styleTextConstProductRow,
@@ -37,7 +37,7 @@ class ConstPendingProductRow extends StatelessWidget {
             ),
           ),
           SizedBox(
-              width: MediaQuery.of(context).size.width * buttonsWidthCol,
+              width: MediaQuery.of(context).size.width * buttonsWidthColLarge,
               child: Container()),
         ],
       ),

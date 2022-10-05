@@ -53,16 +53,28 @@ List<String> valuesComboBox = [
   'Precio compra descendente'
 ];
 
-// width columns
-double codeWidthCol = 0.1;
-double nameWidthCol = 0.175;
-double descWidthCol = 0.175;
-double amountWidthCol = 0.1;
-double priceWidthCol = 0.1;
-double purchasePriceWidthCol = 0.1;
-double providerWidthCol = 0.1;
-double categoryWidthCol = 0.1;
-double buttonsWidthCol = 0.05;
+// width columns Large
+double codeWidthColLarge = 0.1;
+double nameWidthColLarge = 0.175;
+double descWidthColLarge = 0.175;
+double amountWidthColLarge = 0.1;
+double priceWidthColLarge = 0.1;
+double purchasePriceWidthColLarge = 0.1;
+double providerWidthColLarge = 0.1;
+double categoryWidthColLarge = 0.1;
+double buttonsWidthColLarge = 0.05;
+
+// width columns Medium
+double codeWidthColMedium = 0.125;
+double nameWidthColMedium = 0.25;
+double amountWidthColMedium = 0.175;
+double buttonsWidthColMedium = 0.075;
+
+// width columns Small
+double codeWidthColSmall = 0.25;
+double nameWidthColSmall = 0.35;
+double amountWidthColSmall = 0.2;
+double buttonsWidthColSmall = 0.2;
 
 ButtonStyle mobilButtonStyle = ButtonStyle(
   backgroundColor: MaterialStateProperty.all(Colors.green),

@@ -13,7 +13,7 @@ class OrderBy extends StatelessWidget {
     return Container(
       width: 250,
       decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-      margin: const EdgeInsets.only(right: 20, bottom: 20),
+      //margin: const EdgeInsets.only(right: 20),
       child: Combobox<String>(
         placeholder: const Text(
           'Ordenar por:',

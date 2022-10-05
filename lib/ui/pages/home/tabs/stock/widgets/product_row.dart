@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readmore/readmore.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/constants/constant.dart';
 import 'package:sigest/data/models/log_model/log_model.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
@@ -57,6 +58,13 @@ class _ProductRowState extends State<ProductRow> {
 
   @override
   Widget build(BuildContext context) {
+    double widthSize = MediaQuery.of(context).size.width;
+    //
+    bool isSmallerThanTabletLarge =
+        ResponsiveWrapper.of(context).isSmallerThan('TABLET_LARGE');
+    bool isSmallerThanDesktop =
+        ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
+    //
     return Container(
       decoration: BoxDecoration(
           color: widget.productModel.amount! <= 5
@@ -66,109 +74,156 @@ class _ProductRowState extends State<ProductRow> {
                   : widget.index % 2 == 0
                       ? Colors.grey.withOpacity(0.2)
                       : Colors.white),
-      padding: const EdgeInsets.symmetric(vertical: 13),
+      padding: isSmallerThanTabletLarge
+          ? const EdgeInsets.symmetric(vertical: 7)
+          : const EdgeInsets.symmetric(vertical: 13),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width * codeWidthCol,
+            width: isSmallerThanDesktop
+                ? isSmallerThanTabletLarge
+                    ? widthSize * codeWidthColSmall
+                    : widthSize * codeWidthColMedium
+                : widthSize * codeWidthColLarge,
             child: Text(
               widget.productModel.code.toString(),
               textAlign: TextAlign.center,
-              style: styleTextProductRow,
+              style: isSmallerThanTabletLarge
+                  ? styleTextProductRow.copyWith(fontSize: 16)
+                  : styleTextProductRow,
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * nameWidthCol,
+            width: isSmallerThanDesktop
+                ? isSmallerThanTabletLarge
+                    ? widthSize * nameWidthColSmall
+                    : widthSize * nameWidthColMedium
+                : widthSize * nameWidthColLarge,
             child: Text(
               widget.productModel.name,
               textAlign: TextAlign.center,
-              style: styleTextProductRow,
+              style: isSmallerThanTabletLarge
+                  ? styleTextProductRow.copyWith(fontSize: 16)
+                  : styleTextProductRow,
+            ),
+          ),
+          ResponsiveVisibility(
+            visible: false,
+            visibleWhen: const [Condition.largerThan(name: TABLET)],
+            child: SizedBox(
+              width: widthSize * descWidthColLarge,
+              child: ReadMoreText(
+                widget.productModel.desc!,
+                textAlign: TextAlign.center,
+                style: styleTextProductRow,
+                trimLines: 1,
+                trimMode: TrimMode.Line,
+                trimCollapsedText: '(+)',
+                trimExpandedText: '(-)',
+                lessStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green),
+                moreStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green),
+              ),
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * descWidthCol,
-            child: ReadMoreText(
-              widget.productModel.desc!,
-              textAlign: TextAlign.center,
-              style: styleTextProductRow,
-              trimLines: 1,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: '(+)',
-              trimExpandedText: '(-)',
-              lessStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green),
-              moreStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green),
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * amountWidthCol,
-            child: Text(widget.productModel.amount.toString(),
-                textAlign: TextAlign.center, style: styleTextProductRow),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * purchasePriceWidthCol,
+            width: isSmallerThanDesktop
+                ? isSmallerThanTabletLarge
+                    ? widthSize * amountWidthColSmall
+                    : widthSize * amountWidthColMedium
+                : widthSize * amountWidthColLarge,
             child: Text(
-              widget.productModel.purchasePrice.toString(),
+              widget.productModel.amount.toString(),
               textAlign: TextAlign.center,
-              style: styleTextProductRow,
+              style: isSmallerThanTabletLarge
+                  ? styleTextProductRow.copyWith(fontSize: 16)
+                  : styleTextProductRow,
+            ),
+          ),
+          ResponsiveVisibility(
+            visible: false,
+            visibleWhen: const [Condition.largerThan(name: TABLET)],
+            child: SizedBox(
+              width: widthSize * purchasePriceWidthColLarge,
+              child: Text(
+                widget.productModel.purchasePrice.toString(),
+                textAlign: TextAlign.center,
+                style: styleTextProductRow,
+              ),
+            ),
+          ),
+          ResponsiveVisibility(
+            visible: false,
+            visibleWhen: const [Condition.largerThan(name: TABLET)],
+            child: SizedBox(
+              width: widthSize * priceWidthColLarge,
+              child: Text(
+                widget.productModel.price.toString(),
+                style: styleTextProductRow,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          ResponsiveVisibility(
+            visible: false,
+            visibleWhen: const [Condition.largerThan(name: 'TABLET_LARGE')],
+            child: SizedBox(
+              width: widthSize * providerWidthColLarge,
+              child: ReadMoreText(
+                widget.productModel.provider!,
+                textAlign: TextAlign.center,
+                style: styleTextProductRow,
+                trimLines: 1,
+                trimMode: TrimMode.Line,
+                trimCollapsedText: '(+)',
+                trimExpandedText: '(-)',
+                lessStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green),
+                moreStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green),
+              ),
+            ),
+          ),
+          ResponsiveVisibility(
+            visible: false,
+            visibleWhen: const [Condition.largerThan(name: 'TABLET_LARGE')],
+            child: SizedBox(
+              width: widthSize * categoryWidthColLarge,
+              child: ReadMoreText(
+                widget.productModel.category!,
+                textAlign: TextAlign.center,
+                style: styleTextProductRow,
+                trimLines: 1,
+                trimMode: TrimMode.Line,
+                trimCollapsedText: '(+)',
+                trimExpandedText: '(-)',
+                lessStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green),
+                moreStyle: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green),
+              ),
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * priceWidthCol,
-            child: Text(
-              widget.productModel.price.toString(),
-              style: styleTextProductRow,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * providerWidthCol,
-            child: ReadMoreText(
-              widget.productModel.provider!,
-              textAlign: TextAlign.center,
-              style: styleTextProductRow,
-              trimLines: 1,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: '(+)',
-              trimExpandedText: '(-)',
-              lessStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green),
-              moreStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green),
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * categoryWidthCol,
-            child: ReadMoreText(
-              widget.productModel.category!,
-              textAlign: TextAlign.center,
-              style: styleTextProductRow,
-              trimLines: 1,
-              trimMode: TrimMode.Line,
-              trimCollapsedText: '(+)',
-              trimExpandedText: '(-)',
-              lessStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green),
-              moreStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green),
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * buttonsWidthCol,
+            width: isSmallerThanDesktop
+                ? isSmallerThanTabletLarge
+                    ? widthSize * buttonsWidthColSmall
+                    : widthSize * buttonsWidthColMedium
+                : widthSize * buttonsWidthColLarge,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

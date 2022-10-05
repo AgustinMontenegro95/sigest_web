@@ -9,16 +9,18 @@ class ClosedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Button(
       style: ButtonStyle(
-          backgroundColor: ButtonState.all<Color?>(Colors.white),
-          border: ButtonState.all(BorderSide(
-              color: Colors.red, width: 1.0, style: BorderStyle.solid))),
+        backgroundColor: ButtonState.all<Color?>(Colors.white),
+        border: ButtonState.all(
+          BorderSide(color: Colors.red, width: 1.0, style: BorderStyle.solid),
+        ),
+      ),
       onPressed: () {
         Navigator.of(context).pop([false]);
       },
-      child: Image.asset(
-        'assets/images/close_icon.png',
-        fit: BoxFit.cover,
-        width: 25,
+      child: Icon(
+        FluentIcons.chrome_close,
+        color: Colors.red,
+        size: 20,
       ),
     );
   }

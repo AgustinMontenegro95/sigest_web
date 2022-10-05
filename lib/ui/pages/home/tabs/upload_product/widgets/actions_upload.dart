@@ -40,8 +40,8 @@ class FormAction extends StatelessWidget {
               backgroundColor: ButtonState.all<Color?>(Colors.green),
             ),
             child: const Text(
-              'Cancel',
-              style: TextStyle(color: Colors.white),
+              'Cancelar',
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -54,7 +54,13 @@ class FormAction extends StatelessWidget {
             style: ButtonStyle(
               backgroundColor: ButtonState.all<Color?>(Colors.green),
             ),
-            child: const Text('Cargar', style: TextStyle(color: Colors.white)),
+            child: const Text(
+              'Cargar',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 ProductModel productModel = ProductModel(
@@ -99,20 +105,23 @@ class FormAction extends StatelessWidget {
                   builder: (context) {
                     return ContentDialog(
                       title: const Text('SiGeSt'),
-                      content:
-                          const Text('Debes completar los campos solicitados.'),
+                      content: const Text(
+                        'Debes completar los campos solicitados.',
+                        style: TextStyle(fontSize: 20),
+                      ),
                       actions: [
                         Button(
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    ButtonState.all<Color?>(Colors.green)),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text(
-                              'Aceptar',
-                              style: TextStyle(color: Colors.white),
-                            ))
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  ButtonState.all<Color?>(Colors.green)),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            'Aceptar',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
                       ],
                     );
                   },

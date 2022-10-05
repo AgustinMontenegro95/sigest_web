@@ -56,8 +56,10 @@ class _LoadPendingState extends State<LoadPending> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Alta de producto pendiente".toUpperCase(),
-                style: TextStyle(fontSize: 35, color: Colors.blue)),
+            Text(
+              "Alta de producto pendiente".toUpperCase(),
+              style: TextStyle(fontSize: 35, color: Colors.blue),
+            ),
             const Padding(
                 padding: EdgeInsets.only(left: 30), child: ClosedButton()),
           ],

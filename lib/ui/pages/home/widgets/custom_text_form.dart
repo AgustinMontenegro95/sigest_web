@@ -35,13 +35,13 @@ class CustomTextFormBox extends StatelessWidget {
           ? (value) {
               bool isNum = double.tryParse(value!) != null;
               if ((value.isEmpty) || !isNum) {
-                return 'Debe ingresar $label (numérico).';
+                return 'Debe ingresar ${label.toLowerCase()} (numérico).';
               }
               return null;
             }
           : (value) {
               if (value == null || value.isEmpty) {
-                return 'Debe ingresar $label.';
+                return 'Debe ingresar ${label.toLowerCase()}.';
               }
               return null;
             },

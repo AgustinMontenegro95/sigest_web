@@ -35,7 +35,7 @@ class _PendingProductRowState extends State<PendingProductRow> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width * codeWidthCol,
+            width: MediaQuery.of(context).size.width * codeWidthColLarge,
             child: Text(
               widget.productModel.code.toString(),
               textAlign: TextAlign.center,
@@ -43,7 +43,7 @@ class _PendingProductRowState extends State<PendingProductRow> {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * nameWidthCol,
+            width: MediaQuery.of(context).size.width * nameWidthColLarge,
             child: Text(
               widget.productModel.name,
               textAlign: TextAlign.center,
@@ -51,7 +51,7 @@ class _PendingProductRowState extends State<PendingProductRow> {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * amountWidthCol,
+            width: MediaQuery.of(context).size.width * amountWidthColLarge,
             child: Text(
               widget.productModel.amount.toString(),
               textAlign: TextAlign.center,
@@ -59,7 +59,7 @@ class _PendingProductRowState extends State<PendingProductRow> {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * buttonsWidthCol,
+            width: MediaQuery.of(context).size.width * buttonsWidthColLarge,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
