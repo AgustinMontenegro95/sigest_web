@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/ui/pages/home/tabs/stock/widgets/closed_button.dart';
 import 'package:sigest/ui/pages/home/tabs/upload_product/widgets/actions_upload.dart';
@@ -42,6 +43,9 @@ class _LoadPendingState extends State<LoadPending> {
 
   @override
   Widget build(BuildContext context) {
+    double widthSize = MediaQuery.of(context).size.width;
+    bool isSmallerThanMobileLarge =
+        ResponsiveWrapper.of(context).isSmallerThan('MOBILE_LARGE');
     return ContentDialog(
       constraints: const BoxConstraints(maxWidth: double.infinity),
       title: Container(
@@ -57,11 +61,14 @@ class _LoadPendingState extends State<LoadPending> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Alta de producto pendiente".toUpperCase(),
-              style: TextStyle(fontSize: 35, color: Colors.blue),
+              "Alta producto pendiente".toUpperCase(),
+              style: TextStyle(
+                  fontSize: isSmallerThanMobileLarge ? 20 : 35,
+                  color: Colors.blue),
             ),
-            const Padding(
-                padding: EdgeInsets.only(left: 30), child: ClosedButton()),
+            ClosedButton(),
+            /*  const Padding(
+                padding: EdgeInsets.only(left: 30), child: ClosedButton()), */
           ],
         ),
       ),

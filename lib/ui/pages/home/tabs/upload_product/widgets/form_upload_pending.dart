@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/ui/pages/home/widgets/custom_text_form.dart';
 
@@ -27,45 +28,64 @@ class FormUploadPending extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double widthSize = MediaQuery.of(context).size.width;
+    bool isSmallerThanMobileLarge =
+        ResponsiveWrapper.of(context).isSmallerThan('MOBILE_LARGE');
     return Form(
       key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Wrap(
+              spacing: 50.0,
+              runSpacing: 15.0,
+              children: [
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'Código: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25),
+                      ),
+                      TextSpan(
+                          text: product.code.toString(),
+                          style: const TextStyle(fontSize: 25)),
+                    ],
+                  ),
+                ),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'Nombre: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25),
+                      ),
+                      TextSpan(
+                          text: product.name,
+                          style: const TextStyle(fontSize: 25)),
+                    ],
+                  ),
+                ),
+                Container(),
+              ],
+            ),
+          ),
+          CustomTextFormBox(
+            controller: descController,
+            label: 'Descripción',
+            isNumber: false,
+          ),
+          Wrap(
+            spacing: 8.0,
+            runSpacing: 4.0,
             children: [
-              Text.rich(
-                TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: 'Código: ',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                    ),
-                    TextSpan(
-                        text: product.code.toString(),
-                        style: const TextStyle(fontSize: 25)),
-                  ],
-                ),
-              ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: 'Nombre: ',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                    ),
-                    TextSpan(
-                        text: product.name,
-                        style: const TextStyle(fontSize: 25)),
-                  ],
-                ),
-              ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.2,
+                width: isSmallerThanMobileLarge ? widthSize : widthSize * 0.3,
                 child: CustomTextFormBox(
                   controller: amountController,
                   label: 'Cantidad',
@@ -73,18 +93,8 @@ class FormUploadPending extends StatelessWidget {
                   isNumber: true,
                 ),
               ),
-            ],
-          ),
-          CustomTextFormBox(
-            controller: descController,
-            label: 'Descripción',
-            isNumber: false,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.15,
+                width: isSmallerThanMobileLarge ? widthSize : widthSize * 0.3,
                 child: CustomTextFormBox(
                   controller: purchasePriceController,
                   label: 'Precio de compra',
@@ -93,7 +103,7 @@ class FormUploadPending extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.15,
+                width: isSmallerThanMobileLarge ? widthSize : widthSize * 0.3,
                 child: CustomTextFormBox(
                   controller: priceController,
                   label: 'Precio de venta',
@@ -101,8 +111,14 @@ class FormUploadPending extends StatelessWidget {
                   isNumber: true,
                 ),
               ),
+            ],
+          ),
+          Wrap(
+            spacing: 8.0,
+            runSpacing: 4.0,
+            children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.32,
+                width: isSmallerThanMobileLarge ? widthSize : widthSize * 0.45,
                 child: CustomTextFormBox(
                   controller: providerController,
                   label: 'Proveedor',
@@ -111,7 +127,7 @@ class FormUploadPending extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.23,
+                width: isSmallerThanMobileLarge ? widthSize : widthSize * 0.45,
                 child: CustomTextFormBox(
                   controller: categoryController,
                   label: 'Categoria',

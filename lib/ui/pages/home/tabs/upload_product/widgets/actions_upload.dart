@@ -34,7 +34,7 @@ class FormAction extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.20,
+          width: MediaQuery.of(context).size.width * 0.30,
           child: Button(
             style: ButtonStyle(
               backgroundColor: ButtonState.all<Color?>(Colors.green),
@@ -49,7 +49,7 @@ class FormAction extends StatelessWidget {
           ),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.20,
+          width: MediaQuery.of(context).size.width * 0.30,
           child: Button(
             style: ButtonStyle(
               backgroundColor: ButtonState.all<Color?>(Colors.green),

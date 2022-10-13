@@ -23,11 +23,6 @@ class _NavigatorViewWidgetState extends State<NavigatorViewWidget> {
   @override
   Widget build(BuildContext context) {
     return NavigationView(
-      /* appBar: const NavigationAppBar(
-        leading: Center(
-          child: FlutterLogo(size: 25),
-        ),
-      ), */
       pane: NavigationPane(
         header: Padding(
           padding: const EdgeInsets.only(left: 20),
