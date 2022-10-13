@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/constants/constant.dart';
 
 class ConstPendingProductRow extends StatelessWidget {
@@ -6,6 +7,10 @@ class ConstPendingProductRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isSmallerThanDesktop =
+        ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
+    bool isSmallerThanMobile =
+        ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(color: Colors.blue.withOpacity(0.9)),
@@ -13,31 +18,37 @@ class ConstPendingProductRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width * codeWidthColLarge,
+            width: MediaQuery.of(context).size.width * codeWidthColSmall,
             child: Text(
               "Código",
-              style: styleTextConstProductRow,
+              style: isSmallerThanDesktop
+                  ? styleTextConstProductRow.copyWith(fontSize: 19.5)
+                  : styleTextConstProductRow,
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * nameWidthColLarge,
+            width: MediaQuery.of(context).size.width * nameWidthColSmall,
             child: Text(
               "Nombre",
-              style: styleTextConstProductRow,
+              style: isSmallerThanDesktop
+                  ? styleTextConstProductRow.copyWith(fontSize: 19.5)
+                  : styleTextConstProductRow,
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * amountWidthColLarge,
+            width: MediaQuery.of(context).size.width * amountWidthColSmall,
             child: Text(
-              "Cantidad",
-              style: styleTextConstProductRow,
+              isSmallerThanMobile ? 'Cant.' : 'Cantidad',
+              style: isSmallerThanDesktop
+                  ? styleTextConstProductRow.copyWith(fontSize: 19.5)
+                  : styleTextConstProductRow,
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
-              width: MediaQuery.of(context).size.width * buttonsWidthColLarge,
+              width: MediaQuery.of(context).size.width * buttonsWidthColSmall,
               child: Container()),
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/constants/constant.dart';
 import 'package:sigest/data/models/log_model/log_model.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
@@ -21,6 +22,8 @@ class PendingProductRow extends StatefulWidget {
 class _PendingProductRowState extends State<PendingProductRow> {
   @override
   Widget build(BuildContext context) {
+    bool isSmallerThanTabletLarge =
+        ResponsiveWrapper.of(context).isSmallerThan('TABLET_LARGE');
     return Container(
       decoration: BoxDecoration(
           color: widget.productModel.amount! <= 5
@@ -35,31 +38,37 @@ class _PendingProductRowState extends State<PendingProductRow> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width * codeWidthColLarge,
+            width: MediaQuery.of(context).size.width * codeWidthColSmall,
             child: Text(
               widget.productModel.code.toString(),
               textAlign: TextAlign.center,
-              style: styleTextProductRow,
+              style: isSmallerThanTabletLarge
+                  ? styleTextProductRow.copyWith(fontSize: 16)
+                  : styleTextProductRow,
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * nameWidthColLarge,
+            width: MediaQuery.of(context).size.width * nameWidthColSmall,
             child: Text(
               widget.productModel.name,
               textAlign: TextAlign.center,
-              style: styleTextProductRow,
+              style: isSmallerThanTabletLarge
+                  ? styleTextProductRow.copyWith(fontSize: 16)
+                  : styleTextProductRow,
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * amountWidthColLarge,
+            width: MediaQuery.of(context).size.width * amountWidthColSmall,
             child: Text(
               widget.productModel.amount.toString(),
               textAlign: TextAlign.center,
-              style: styleTextProductRow,
+              style: isSmallerThanTabletLarge
+                  ? styleTextProductRow.copyWith(fontSize: 16)
+                  : styleTextProductRow,
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * buttonsWidthColLarge,
+            width: MediaQuery.of(context).size.width * buttonsWidthColSmall,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

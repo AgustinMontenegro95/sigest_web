@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/data/models/user_model/user_model.dart';
 import 'package:sigest/ui/pages/home/tabs/stock/widgets/closed_button.dart';
@@ -37,6 +38,9 @@ class ContentProduct extends StatelessWidget {
     String price = priceController.text;
     String provider = providerController.text;
     String category = categoryController.text;
+    double widthSize = MediaQuery.of(context).size.width;
+    bool isSmallerThanMobileLarge =
+        ResponsiveWrapper.of(context).isSmallerThan('MOBILE_LARGE');
     return ContentDialog(
       constraints: const BoxConstraints(maxWidth: double.infinity),
       title: Container(
@@ -100,9 +104,10 @@ class ContentProduct extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: const EdgeInsets.only(top: 10),
+              child: Wrap(
+                spacing: 50.0,
+                runSpacing: 15.0,
                 children: [
                   Text.rich(
                     TextSpan(
@@ -141,11 +146,12 @@ class ContentProduct extends StatelessWidget {
               label: 'Descripción',
               isNumber: false,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              spacing: 8.0,
+              runSpacing: 4.0,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
+                  width: isSmallerThanMobileLarge ? widthSize : widthSize * 0.3,
                   child: CustomTextFormBox(
                     controller: amountController,
                     label: 'Cantidad',
@@ -154,7 +160,7 @@ class ContentProduct extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
+                  width: isSmallerThanMobileLarge ? widthSize : widthSize * 0.3,
                   child: CustomTextFormBox(
                     controller: purchasePriceController,
                     label: 'Precio de compra',
@@ -163,7 +169,7 @@ class ContentProduct extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
+                  width: isSmallerThanMobileLarge ? widthSize : widthSize * 0.3,
                   child: CustomTextFormBox(
                     controller: priceController,
                     label: 'Precio de venta',
@@ -173,11 +179,13 @@ class ContentProduct extends StatelessWidget {
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              spacing: 8.0,
+              runSpacing: 4.0,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.45,
+                  width:
+                      isSmallerThanMobileLarge ? widthSize : widthSize * 0.45,
                   child: CustomTextFormBox(
                     controller: providerController,
                     label: 'Proveedor',
@@ -186,7 +194,8 @@ class ContentProduct extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.45,
+                  width:
+                      isSmallerThanMobileLarge ? widthSize : widthSize * 0.45,
                   child: CustomTextFormBox(
                     controller: categoryController,
                     label: 'Categoria',
@@ -204,7 +213,7 @@ class ContentProduct extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.20,
+              width: MediaQuery.of(context).size.width * 0.30,
               child: Button(
                 style: ButtonStyle(
                   backgroundColor: ButtonState.all<Color?>(Colors.red),
@@ -219,7 +228,7 @@ class ContentProduct extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.20,
+              width: MediaQuery.of(context).size.width * 0.30,
               child: Button(
                 style: ButtonStyle(
                   backgroundColor: ButtonState.all<Color?>(Colors.green),

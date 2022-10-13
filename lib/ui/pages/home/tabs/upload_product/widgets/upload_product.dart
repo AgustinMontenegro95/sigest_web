@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sigest/data/models/log_model/log_model.dart';
 import 'package:sigest/data/models/product_model/product_model.dart';
 import 'package:sigest/domain/bloc/log/log_bloc.dart';
@@ -32,6 +33,11 @@ class UploadProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double widthSize = MediaQuery.of(context).size.width;
+    bool isSmallerThanTablet =
+        ResponsiveWrapper.of(context).isSmallerThan(TABLET);
+    bool isSmallerThanTabletLarge =
+        ResponsiveWrapper.of(context).isSmallerThan('TABLET_LARGE');
     return Form(
       key: _formKey,
       child: Tooltip(
@@ -55,89 +61,114 @@ class UploadProduct extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.2),
                 border: Border.all(color: Colors.blue),
                 borderRadius: BorderRadius.circular(30)),
-            width: MediaQuery.of(context).size.width * 0.95,
+            //width: widthSize * 0.95,
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      child: CustomTextFormBox(
-                        controller: codeController,
-                        label: 'Codigo',
-                        maxLength: 15,
-                        isNumber: true,
+                SizedBox(
+                  width: widthSize * 0.95,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width:
+                            isSmallerThanTablet ? widthSize : widthSize * 0.25,
+                        child: CustomTextFormBox(
+                          controller: codeController,
+                          label: 'Codigo',
+                          maxLength: 15,
+                          isNumber: true,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      child: CustomTextFormBox(
-                        controller: nameController,
-                        label: 'Nombre',
-                        maxLength: 30,
-                        isNumber: false,
+                      SizedBox(
+                        width:
+                            isSmallerThanTablet ? widthSize : widthSize * 0.4,
+                        child: CustomTextFormBox(
+                          controller: nameController,
+                          label: 'Nombre',
+                          maxLength: 30,
+                          isNumber: false,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      child: CustomTextFormBox(
-                        controller: amountController,
-                        label: 'Cantidad',
-                        maxLength: 6,
-                        isNumber: true,
+                      SizedBox(
+                        width:
+                            isSmallerThanTablet ? widthSize : widthSize * 0.2,
+                        child: CustomTextFormBox(
+                          controller: amountController,
+                          label: 'Cantidad',
+                          maxLength: 6,
+                          isNumber: true,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 CustomTextFormBox(
                   controller: descController,
                   label: 'Descripción',
                   isNumber: false,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      child: CustomTextFormBox(
-                        controller: purchasePriceController,
-                        label: 'Precio de compra',
-                        maxLength: 10,
-                        isNumber: true,
+                SizedBox(
+                  width: widthSize * 0.95,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: isSmallerThanTablet
+                            ? widthSize
+                            : isSmallerThanTabletLarge
+                                ? widthSize * 0.4
+                                : widthSize * 0.175,
+                        child: CustomTextFormBox(
+                          controller: purchasePriceController,
+                          label: 'Precio compra',
+                          maxLength: 10,
+                          isNumber: true,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      child: CustomTextFormBox(
-                        controller: priceController,
-                        label: 'Precio de venta',
-                        maxLength: 10,
-                        isNumber: true,
+                      SizedBox(
+                        width: isSmallerThanTablet
+                            ? widthSize
+                            : isSmallerThanTabletLarge
+                                ? widthSize * 0.4
+                                : widthSize * 0.175,
+                        child: CustomTextFormBox(
+                          controller: priceController,
+                          label: 'Precio venta',
+                          maxLength: 10,
+                          isNumber: true,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.32,
-                      child: CustomTextFormBox(
-                        controller: providerController,
-                        label: 'Proveedor',
-                        maxLength: 30,
-                        isNumber: false,
+                      SizedBox(
+                        width: isSmallerThanTablet
+                            ? widthSize
+                            : isSmallerThanTabletLarge
+                                ? widthSize * 0.4
+                                : widthSize * 0.175,
+                        child: CustomTextFormBox(
+                          controller: providerController,
+                          label: 'Proveedor',
+                          maxLength: 30,
+                          isNumber: false,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.23,
-                      child: CustomTextFormBox(
-                        controller: categoryController,
-                        label: 'Categoria',
-                        maxLength: 20,
-                        isNumber: false,
+                      SizedBox(
+                        width: isSmallerThanTablet
+                            ? widthSize
+                            : isSmallerThanTabletLarge
+                                ? widthSize * 0.4
+                                : widthSize * 0.175,
+                        child: CustomTextFormBox(
+                          controller: categoryController,
+                          label: 'Categoria',
+                          maxLength: 20,
+                          isNumber: false,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.20,
+                  width: widthSize * 0.30,
                   child: Tooltip(
                     message: 'Click para agregar un producto nuevo.',
                     child: Button(

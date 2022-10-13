@@ -14,7 +14,7 @@ class ConstProductRow extends StatelessWidget {
     bool isSmallerThanDesktop =
         ResponsiveWrapper.of(context).isSmallerThan(DESKTOP);
     bool isSmallerThanMobile =
-        ResponsiveWrapper.of(context).isSmallerThan(MOBILE);
+        ResponsiveWrapper.of(context).isSmallerThan('MOBILE');
     //
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
