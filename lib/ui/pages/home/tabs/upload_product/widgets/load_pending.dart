@@ -43,7 +43,6 @@ class _LoadPendingState extends State<LoadPending> {
 
   @override
   Widget build(BuildContext context) {
-    double widthSize = MediaQuery.of(context).size.width;
     bool isSmallerThanMobileLarge =
         ResponsiveWrapper.of(context).isSmallerThan('MOBILE_LARGE');
     return ContentDialog(
@@ -66,7 +65,7 @@ class _LoadPendingState extends State<LoadPending> {
                   fontSize: isSmallerThanMobileLarge ? 20 : 35,
                   color: Colors.blue),
             ),
-            ClosedButton(),
+            const ClosedButton(),
             /*  const Padding(
                 padding: EdgeInsets.only(left: 30), child: ClosedButton()), */
           ],

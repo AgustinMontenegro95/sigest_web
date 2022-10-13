@@ -126,8 +126,8 @@ class _StockTabState extends State<StockTab> {
                               ),
                             ),
                           ),
-                          ResponsiveRowColumnItem(
-                              child: const SizedBox(width: 20)),
+                          const ResponsiveRowColumnItem(
+                              child: SizedBox(width: 20)),
                         ],
                       ),
                       const ConstProductRow(),

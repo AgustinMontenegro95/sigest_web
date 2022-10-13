@@ -52,7 +52,6 @@ class _ProductPdfViewState extends State<ProductPdfView> {
 
     String formattedDate = date.toString().substring(0, 19);
     final image = await imageFromAssetBundle('assets/images/icon/icon.png');
-    final logo = pw.Image(image);
     pdf.addPage(
       pw.Page(
         pageFormat: format,
